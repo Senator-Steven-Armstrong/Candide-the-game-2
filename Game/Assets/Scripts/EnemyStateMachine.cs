@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class EnemyStateMachine : EntityStateMachine
 {
-    private BattleStateMachine BSM;
+    
     public BaseEnemy enemy;
 
+    
+
     // Start is called before the first frame update
-    void Start()
-    {
-        BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
-        Debug.Log(BSM.playersInBattle);
-        ChooseAction();
-    }
+    
 
     // Update is called once per frame
     void Update()
@@ -21,13 +18,13 @@ public class EnemyStateMachine : EntityStateMachine
         switch (currentState)
         {
             case TurnState.WAITING:
-
                 break;
             case TurnState.SELECTING:
-
+                ChooseAction();
+                currentState = TurnState.WAITING;
                 break;
             case TurnState.ACTION:
-
+                StartCoroutine(TimeForAction());
                 break;
             case TurnState.DEAD:
 
@@ -39,8 +36,10 @@ public class EnemyStateMachine : EntityStateMachine
     {
         HandleTurn myAttack = new HandleTurn();
         myAttack.attackerName = enemy.name;
+        myAttack.entityType = "enemy";
         myAttack.attackerGameobject = this.gameObject;
         myAttack.TargetGameObject = BSM.playersInBattle[Random.Range(0, BSM.playersInBattle.Count)];
         BSM.CollectActions(myAttack);
+
     }
 }
