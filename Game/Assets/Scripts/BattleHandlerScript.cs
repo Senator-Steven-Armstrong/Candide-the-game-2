@@ -11,8 +11,6 @@ public class BattleHandlerScript : MonoBehaviour
     public Vector3 friendAttackPos;
     public Vector3 enemyAttackPos;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +48,7 @@ public class BattleHandlerScript : MonoBehaviour
             yield return StartCoroutine(attackQueue[i].Action(enemyEntites, playerEntites));
             yield return new WaitForSeconds(1);
         }
-
+        StartCoroutine(FullTurn());
     }
 
 }

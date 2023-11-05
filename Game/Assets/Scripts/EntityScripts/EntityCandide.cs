@@ -6,9 +6,10 @@ using UnityEngine.XR;
 public class EntityCandide : BaseEntityScipt
 {
     private int chosenAttackIndex;
-
+    public CameraBehaviourScript cameraBehaviourScript;
     private void Start()
     {
+        cameraBehaviourScript = Camera.main.GetComponent<CameraBehaviourScript>();
         SetVariables();
     }
 
@@ -22,6 +23,7 @@ public class EntityCandide : BaseEntityScipt
         Debug.Log("candide balls?");
 
         currentMoveState = MoveStates.MOVETOBATTLE;
+        StartCoroutine(cameraBehaviourScript.MoveToBattlePos(moveTime));
         yield return new WaitForSeconds(moveTime);
 
         currentMoveState = MoveStates.WAIT;
@@ -41,7 +43,9 @@ public class EntityCandide : BaseEntityScipt
         yield return new WaitForSeconds(1);
 
         currentMoveState = MoveStates.MOVETOSTART;
+        StartCoroutine(cameraBehaviourScript.MoveToOverviewPos(moveTime));
         yield return new WaitForSeconds(moveTime);
+        currentMoveState = MoveStates.WAIT;
     }
 
     private void Attack1(List<GameObject> entites)
@@ -76,6 +80,7 @@ public class EntityCandide : BaseEntityScipt
             }
             yield return null; // wait until next frame, then continue execution from here (loop continues)
         }
+
 
         // now this function returns
     }

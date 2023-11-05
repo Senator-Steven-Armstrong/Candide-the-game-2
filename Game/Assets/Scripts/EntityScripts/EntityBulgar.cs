@@ -32,5 +32,6 @@ public class EntityBulgar : BaseEntityScipt
 
         currentMoveState = MoveStates.MOVETOSTART;
         yield return new WaitForSeconds(moveTime);
+        currentMoveState = MoveStates.WAIT;
     }
 }
