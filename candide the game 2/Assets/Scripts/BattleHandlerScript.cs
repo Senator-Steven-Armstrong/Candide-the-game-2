@@ -10,12 +10,16 @@ public class BattleHandlerScript : MonoBehaviour
     public List<BaseEntityScipt> attackQueue;
     public Vector3 friendAttackPos;
     public Vector3 enemyAttackPos;
+    public GameObject ActionMenu;
+    public GameObject BottomMenu;
+    public BaseEntityScipt AttackingEntityScript;
 
     // Start is called before the first frame update
     void Start()
     {
         attackQueue = SortEntityAttackInitiative();
-
+        ActionMenu.SetActive(false);
+        BottomMenu.SetActive(false);
         StartCoroutine(FullTurn());
     }
 
@@ -45,10 +49,23 @@ public class BattleHandlerScript : MonoBehaviour
     {
         for (int i = 0; i < attackQueue.Count; i++)
         {
+            AttackingEntityScript = attackQueue[i];
+            if(AttackingEntityScript.isPlayerControlled)
+            {
+                BottomMenu.SetActive(true);
+            }
             yield return StartCoroutine(attackQueue[i].Action(enemyEntites, playerEntites));
+            BottomMenu.SetActive(false);
             yield return new WaitForSeconds(1);
         }
         StartCoroutine(FullTurn());
     }
 
+    public void SortAttacksInUI()
+    {
+        for(int i = 0;i < AttackingEntityScript.attackScripts.Count;i++)
+        {
+
+        }
+    }
 }

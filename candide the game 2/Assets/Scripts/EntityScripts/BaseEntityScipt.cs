@@ -11,10 +11,11 @@ public abstract class BaseEntityScipt : MonoBehaviour
     public Vector3 startPosition;
     public Vector3 battlePosition;
     public float moveTime;
+    public int initiative;
+    public List<BaseActionScript> attackScripts;
+    public bool isPlayerControlled;
 
     public float elapsedTime;
-
-    public int initiative;
 
     public enum MoveStates
     {
@@ -75,4 +76,6 @@ public abstract class BaseEntityScipt : MonoBehaviour
                 break;
         }
     }
+
+ 
 }
