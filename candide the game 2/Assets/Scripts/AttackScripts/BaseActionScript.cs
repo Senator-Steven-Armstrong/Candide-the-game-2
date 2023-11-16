@@ -2,12 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseActionScript : MonoBehaviour
+public abstract class BaseActionScript
 {
-    public string attackName;
-    public string stringDamage;
+    public string stringName;
+    public string stringAttackDamage;
+    public string stringDebateDamage;
+    public ActionButtonScript buttonScript;
+    public Animator animator;
 
-    public abstract void Action(List<GameObject> enemies, List<GameObject> friends);
+    public abstract void Action(List<GameObject> enemies, List<GameObject> friends, BaseEntityScipt currentEntity);
 
-    public abstract void SpecialAction();
+    public abstract void SetVariables();
+
+    public void SetAnimator(Animator animator)
+    {
+        this.animator = animator;
+    }
+
+    public void ExtendVariables()
+    {
+        stringAttackDamage = "ATK " + stringAttackDamage;
+        stringDebateDamage = "DEB " + stringDebateDamage;
+    }
 }

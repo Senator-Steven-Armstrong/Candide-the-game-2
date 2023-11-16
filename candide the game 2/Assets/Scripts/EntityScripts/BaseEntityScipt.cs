@@ -12,10 +12,15 @@ public abstract class BaseEntityScipt : MonoBehaviour
     public Vector3 battlePosition;
     public float moveTime;
     public int initiative;
-    public List<BaseActionScript> attackScripts;
+    public List<BaseAttackScript> attackScripts = new();
+    public List<BaseDebateScript> debateScripts = new();
     public bool isPlayerControlled;
 
+    public CameraBehaviourScript cameraBehaviourScript;
+
     public float elapsedTime;
+
+    public BaseAttackScript attack1;
 
     public enum MoveStates
     {
@@ -39,8 +44,31 @@ public abstract class BaseEntityScipt : MonoBehaviour
         startPosition = transform.position;
     }
 
-    public abstract IEnumerator Action(List<GameObject> enemies, List<GameObject> friends);
+    public IEnumerator MoveToBattle()
+    {
+        currentMoveState = MoveStates.MOVETOBATTLE;
+        if (isPlayerControlled)
+        {
+            StartCoroutine(cameraBehaviourScript.MoveToBattlePos(moveTime));
+        }
 
+        yield return new WaitForSeconds(moveTime);
+
+        currentMoveState = MoveStates.WAIT;
+    }
+
+    public IEnumerator MoveFromBattle()
+    {
+        yield return new WaitForSeconds(1);
+
+        currentMoveState = MoveStates.MOVETOSTART;
+        if (isPlayerControlled)
+        {
+            StartCoroutine(cameraBehaviourScript.MoveToOverviewPos(moveTime));
+        }
+        yield return new WaitForSeconds(moveTime);
+        currentMoveState = MoveStates.WAIT;
+    }
     public GameObject ChooseRandomEntity(List<GameObject> entites)
     {
         int entityIndex = Random.Range(0, entites.Count);
@@ -77,5 +105,7 @@ public abstract class BaseEntityScipt : MonoBehaviour
         }
     }
 
- 
+    
+
+
 }

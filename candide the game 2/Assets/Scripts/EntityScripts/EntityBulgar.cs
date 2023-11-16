@@ -7,6 +7,8 @@ public class EntityBulgar : BaseEntityScipt
     private void Start()
     {
         SetVariables();
+        attackScripts.Add(new AttackBasic());
+        attackScripts.Add(new AttackBasic());
     }
 
     private void Update()
@@ -14,24 +16,24 @@ public class EntityBulgar : BaseEntityScipt
         MovePositionsChecker();
     }
 
-    public override IEnumerator Action(List<GameObject> enemies, List<GameObject> friends)
-    {
-        Debug.Log("bulgar????");
+    //public override IEnumerator Action(List<GameObject> enemies, List<GameObject> friends)
+    //{
+    //    Debug.Log("bulgar????");
 
-        currentMoveState = MoveStates.MOVETOBATTLE;
-        yield return new WaitForSeconds(moveTime);
+    //    currentMoveState = MoveStates.MOVETOBATTLE;
+    //    yield return new WaitForSeconds(moveTime);
 
-        currentMoveState = MoveStates.WAIT;
+    //    currentMoveState = MoveStates.WAIT;
 
-        GameObject enemyToAttack = ChooseRandomEntity(friends);
-        BaseEntityScipt entityScript = enemyToAttack.GetComponent<BaseEntityScipt>();
-        entityScript.healthSystem.DealDamage(Random.Range(1, 2));
-        animator.SetTrigger("Attack");
+    //    GameObject enemyToAttack = ChooseRandomEntity(friends);
+    //    BaseEntityScipt entityScript = enemyToAttack.GetComponent<BaseEntityScipt>();
+    //    entityScript.healthSystem.DealDamage(Random.Range(1, 2));
+    //    animator.SetTrigger("Attack");
 
-        yield return new WaitForSeconds(1);
+    //    yield return new WaitForSeconds(1);
 
-        currentMoveState = MoveStates.MOVETOSTART;
-        yield return new WaitForSeconds(moveTime);
-        currentMoveState = MoveStates.WAIT;
-    }
+    //    currentMoveState = MoveStates.MOVETOSTART;
+    //    yield return new WaitForSeconds(moveTime);
+    //    currentMoveState = MoveStates.WAIT;
+    //}
 }
