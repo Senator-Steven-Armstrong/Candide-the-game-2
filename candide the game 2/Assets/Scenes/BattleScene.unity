@@ -5735,12 +5735,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f32a1b263ac43448ab8146e6c5ab277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEntites:
+  playerEntities:
   - {fileID: 1104325292}
   - {fileID: 1114243757}
-  enemyEntites:
+  enemyEntities:
   - {fileID: 1862297131}
   - {fileID: 685424933}
+  playerEntitiesAlive: []
+  enemyEntitiesAlive: []
   attackQueue: []
   friendAttackPos: {x: 0, y: 0, z: 0}
   enemyAttackPos: {x: 0, y: 0, z: 0}
@@ -5750,7 +5752,6 @@ MonoBehaviour:
   icannotprocess: 0
   hasSelectedInput: 0
   elapsedTime: 0
-  currentState: 0
 --- !u!1 &1968382772
 GameObject:
   m_ObjectHideFlags: 0

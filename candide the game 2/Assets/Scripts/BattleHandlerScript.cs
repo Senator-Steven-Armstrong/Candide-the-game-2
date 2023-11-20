@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class BattleHandlerScript : MonoBehaviour
 {
-    public List<GameObject> playerEntites;
-    public List<GameObject> enemyEntites;
+    public List<GameObject> playerEntities;
+    public List<GameObject> enemyEntities;
+    public List<GameObject> playerEntitiesAlive;
+    public List<GameObject> enemyEntitiesAlive;
     public List<BaseEntityScipt> attackQueue;
     public Vector3 friendAttackPos;
     public Vector3 enemyAttackPos;
@@ -18,61 +20,32 @@ public class BattleHandlerScript : MonoBehaviour
     public bool hasSelectedInput;
     public float elapsedTime;
 
-    public enum BattleStates
-    {
-        SWITCHINGENTITY,
-        MOVINGTOBATTLE,
-        WAITINGFORINPUT,
-        CHOOSINGENTITY,
-        EXECUTINGACTION,
-
-    }
-
-    public BattleStates currentState;
-
     // Start is called before the first frame update
     void Start()
     {
+        SetAliveEntities();
+        icannotprocess = false;
         attackQueue = SortEntityByAttackInitiative();
         ActionMenu.SetActive(false);
         BottomMenu.SetActive(false);
         StartCoroutine(FullTurn());
-
-        icannotprocess = false;
+        
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SetAliveEntities()
     {
-        //for (int i = 0; i < attackQueue.Count; i++)
-        //{
-        //    switch (currentState)
-        //    {
-        //        case BattleStates.SWITCHINGENTITY:
-                    
-        //            break;
-        //        case BattleStates.WAITINGFORINPUT:
-        //            if (hasSelectedInput)
-        //            {
-        //                currentState = BattleStates.CHOOSINGENTITY;
-        //            }
-        //            break;
-        //        case BattleStates.CHOOSINGENTITY:
-        //            break;
-        //        case BattleStates.EXECUTINGACTION:
-        //            break;
-        //    }
-        //}
+        playerEntitiesAlive = playerEntities;
+        enemyEntitiesAlive = enemyEntities;
     }
 
     private List<BaseEntityScipt> SortEntityByAttackInitiative()
     {
         List<BaseEntityScipt> list = new();
-        foreach (GameObject ent in playerEntites)
+        foreach (GameObject ent in playerEntitiesAlive)
         {
             list.Add(ent.GetComponent<BaseEntityScipt>());
         }
-        foreach (GameObject ent in enemyEntites)
+        foreach (GameObject ent in enemyEntitiesAlive)
         {
             list.Add(ent.GetComponent<BaseEntityScipt>());
         }
@@ -96,11 +69,11 @@ public class BattleHandlerScript : MonoBehaviour
             //Attackerar för dumma botar
             if (!attackQueue[i].isPlayerControlled)
             {
-                attackQueue[i].AiChooseMove(playerEntites, enemyEntites, AttackingEntityScript);  
+                attackQueue[i].AiChooseMove(playerEntitiesAlive, enemyEntitiesAlive, AttackingEntityScript);  
             }
 
             //väntar på input från dumma spelaren
-            if (attackQueue[i].isPlayerControlled)
+            else if (attackQueue[i].isPlayerControlled)
             {
                 yield return StartCoroutine(WaitForInput());
             }
@@ -109,6 +82,9 @@ public class BattleHandlerScript : MonoBehaviour
 
             BottomMenu.SetActive(false);
             ActionMenu.SetActive(false);
+
+            CheckAliveEntities();
+
             yield return new WaitForSeconds(1);
         }
         StartCoroutine(FullTurn());
@@ -128,8 +104,25 @@ public class BattleHandlerScript : MonoBehaviour
             }
             yield return null;
         }
-        
     }
 
-
+    public void CheckAliveEntities()
+    {
+        for (int i = 0; i < attackQueue.Count; i++)
+        {
+            if (attackQueue[i].healthSystem.currentHealth <= 0 || attackQueue[i].moralitySystem.currentMorality <= 0)
+            {
+                if (attackQueue[i].isPlayerControlled == true)
+                {
+                    playerEntitiesAlive.Remove(attackQueue[i].gameObject);
+                }
+                else
+                {
+                    enemyEntitiesAlive.Remove(attackQueue[i].gameObject);
+                }
+                attackQueue.Remove(attackQueue[i]);
+                i--;
+            }
+        }
+    }
 }

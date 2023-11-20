@@ -102,7 +102,7 @@ public class BattleMenuCanvasScript : MonoBehaviour
             Attacks[i].buttonScript = AttackUI.GetComponent<ActionButtonScript>();
             Attacks[i].buttonScript.SetVariables(Attacks[i].stringName, Attacks[i].stringAttackDamage, Attacks[i].stringDebateDamage);
 
-            UnityAction action = () => Attacks[i2].Action(battleHandlerScript.enemyEntites, battleHandlerScript.playerEntites, battleHandlerScript.AttackingEntityScript);
+            UnityAction action = () => Attacks[i2].Action(battleHandlerScript.enemyEntitiesAlive, battleHandlerScript.playerEntitiesAlive, battleHandlerScript.AttackingEntityScript);
             UnityAction stupid = () => SetStupidVariable();
 
             // fixar button press för attacken
@@ -130,7 +130,7 @@ public class BattleMenuCanvasScript : MonoBehaviour
             Debates[i].buttonScript.SetVariables(Debates[i].stringName, Debates[i].stringAttackDamage, Debates[i].stringDebateDamage);
 
             // fixar button press för attacken'
-            UnityAction action = () => Debates[i2].Action(battleHandlerScript.enemyEntites, battleHandlerScript.playerEntites, battleHandlerScript.AttackingEntityScript);
+            UnityAction action = () => Debates[i2].Action(battleHandlerScript.enemyEntitiesAlive, battleHandlerScript.playerEntitiesAlive, battleHandlerScript.AttackingEntityScript);
             UnityAction stupid = () => SetStupidVariable();
 
             Button button = DebateUI.GetComponent<Button>();

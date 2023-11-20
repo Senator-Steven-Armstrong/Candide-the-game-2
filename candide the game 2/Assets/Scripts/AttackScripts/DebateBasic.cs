@@ -9,7 +9,7 @@ public class DebateBasic : BaseDebateScript
         currentEntity.animator.SetTrigger("Debate");
         GameObject enemyToAttack = enemies[Random.Range(0, enemies.Count)]; ;
         BaseEntityScipt entityScript = enemyToAttack.GetComponent<BaseEntityScipt>();
-        entityScript.moralitySystem.DealDamage(1);
+        entityScript.moralitySystem.DealDamage(6);
     }
 
     public override void SetVariables()

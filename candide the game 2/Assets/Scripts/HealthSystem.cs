@@ -42,9 +42,7 @@ public class HealthSystem : MonoBehaviour
 
     public void KillEntity()
     {
-
         currentHealth = 0;
-        Destroy(gameObject);
     }
 
     private void SetHealthbar()
