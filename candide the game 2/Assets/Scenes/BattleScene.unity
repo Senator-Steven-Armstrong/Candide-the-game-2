@@ -1324,6 +1324,7 @@ MonoBehaviour:
   moveTime: 0.4
   initiative: 100
   isPlayerControlled: 0
+  cameraBehaviourScript: {fileID: 0}
   elapsedTime: 0
 --- !u!4 &685424938
 Transform:
@@ -2046,6 +2047,7 @@ MonoBehaviour:
   - {fileID: 777658768}
   - {fileID: 701924575}
   - {fileID: 1821751214}
+  OccupiedActionSpaces: []
   ActionUIPrefab: {fileID: 8335902617299046325, guid: cc92a7411736b374bb2ca669ac48d37e, type: 3}
 --- !u!1 &924359899
 GameObject:
@@ -2987,8 +2989,8 @@ MonoBehaviour:
   moveTime: 0.4
   initiative: 9
   isPlayerControlled: 1
-  elapsedTime: 0
   cameraBehaviourScript: {fileID: 0}
+  elapsedTime: 0
 --- !u!114 &1104325295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3220,8 +3222,8 @@ MonoBehaviour:
   moveTime: 0.4
   initiative: 10
   isPlayerControlled: 1
-  elapsedTime: 0
   cameraBehaviourScript: {fileID: 0}
+  elapsedTime: 0
 --- !u!4 &1114243762
 Transform:
   m_ObjectHideFlags: 0
@@ -5423,6 +5425,7 @@ MonoBehaviour:
   moveTime: 0.4
   initiative: 0
   isPlayerControlled: 0
+  cameraBehaviourScript: {fileID: 0}
   elapsedTime: 0
 --- !u!114 &1862297134
 MonoBehaviour:
@@ -5744,6 +5747,10 @@ MonoBehaviour:
   ActionMenu: {fileID: 929298708}
   BottomMenu: {fileID: 483239617}
   AttackingEntityScript: {fileID: 0}
+  icannotprocess: 0
+  hasSelectedInput: 0
+  elapsedTime: 0
+  currentState: 0
 --- !u!1 &1968382772
 GameObject:
   m_ObjectHideFlags: 0

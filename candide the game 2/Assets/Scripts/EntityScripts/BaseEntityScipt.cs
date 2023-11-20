@@ -105,7 +105,7 @@ public abstract class BaseEntityScipt : MonoBehaviour
         }
     }
 
-    
+    public abstract void AiChooseMove(List<GameObject> enemies, List<GameObject> friends, BaseEntityScipt currentEntity);
 
 
 }

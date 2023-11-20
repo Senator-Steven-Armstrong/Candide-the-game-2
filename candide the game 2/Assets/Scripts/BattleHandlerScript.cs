@@ -96,9 +96,7 @@ public class BattleHandlerScript : MonoBehaviour
             //Attackerar för dumma botar
             if (!attackQueue[i].isPlayerControlled)
             {
-                int index = Random.Range(0, AttackingEntityScript.attackScripts.Count);
-                AttackingEntityScript.attackScripts[index].SetAnimator(AttackingEntityScript.animator);
-                AttackingEntityScript.attackScripts[index].Action(playerEntites, enemyEntites, AttackingEntityScript);  
+                attackQueue[i].AiChooseMove(playerEntites, enemyEntites, AttackingEntityScript);  
             }
 
             //väntar på input från dumma spelaren
