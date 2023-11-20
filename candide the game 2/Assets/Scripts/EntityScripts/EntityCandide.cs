@@ -12,7 +12,6 @@ public class EntityCandide : BaseEntityScipt
 
     private void Start()
     {
-        cameraBehaviourScript = Camera.main.GetComponent<CameraBehaviourScript>();
         SetVariables();
 
         attackScripts.Add(new AttackBasic());

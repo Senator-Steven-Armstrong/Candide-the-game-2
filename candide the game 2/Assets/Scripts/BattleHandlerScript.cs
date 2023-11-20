@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BattleHandlerScript : MonoBehaviour
 {
@@ -17,19 +18,43 @@ public class BattleHandlerScript : MonoBehaviour
     public BaseEntityScipt AttackingEntityScript;
     public bool icannotprocess;
 
+    [SerializeField] private List<Vector3> playerBattlePositions;
+    [SerializeField] private List<Vector3> enemyBattlePositions;
+
     public bool hasSelectedInput;
     public float elapsedTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        SetAliveEntities();
+        SpawnEntities();
+
+
         icannotprocess = false;
         attackQueue = SortEntityByAttackInitiative();
         ActionMenu.SetActive(false);
         BottomMenu.SetActive(false);
         StartCoroutine(FullTurn());
         
+    }
+
+    private void SpawnEntities()
+    {
+        //spawn players
+        for (int i = 0; i < playerEntities.Count; i++)
+        {
+            GameObject playerEntity = Instantiate(playerEntities[i]);
+            playerEntitiesAlive.Add(playerEntity);
+            playerEntity.transform.position = playerBattlePositions[i];
+        }
+
+        //spawn enemies
+        for (int i = 0; i < enemyEntities.Count; i++)
+        {
+            GameObject enemyEntity = Instantiate(enemyEntities[i]);
+            enemyEntitiesAlive.Add(enemyEntity);
+            enemyEntity.transform.position = enemyBattlePositions[i];
+        }
     }
 
     private void SetAliveEntities()
@@ -58,6 +83,12 @@ public class BattleHandlerScript : MonoBehaviour
     {
         for (int i = 0; i < attackQueue.Count; i++)
         {
+
+            if(i == 0)
+            {
+                yield return new WaitForSeconds(1.5f);
+            }
+
             AttackingEntityScript = attackQueue[i];
 
             if (AttackingEntityScript.isPlayerControlled)
@@ -87,7 +118,17 @@ public class BattleHandlerScript : MonoBehaviour
 
             yield return new WaitForSeconds(1);
         }
-        StartCoroutine(FullTurn());
+
+        if(playerEntitiesAlive.Count == 0 || enemyEntitiesAlive.Count == 0)
+        {
+            SceneManager.LoadScene(1);
+        }
+        else
+        {
+            StartCoroutine(FullTurn());
+        }
+
+        
     }
 
     public IEnumerator WaitForInput()

@@ -41,6 +41,8 @@ public abstract class BaseEntityScipt : MonoBehaviour
             moralitySystem = gameObject.GetComponent<MoralitySystem>();
         if (energySystem == null)
             energySystem = gameObject.GetComponent<EnergySystem>();
+        if (cameraBehaviourScript == null)
+            cameraBehaviourScript = Camera.main.GetComponent<CameraBehaviourScript>();
         startPosition = transform.position;
     }
 
@@ -49,6 +51,7 @@ public abstract class BaseEntityScipt : MonoBehaviour
         currentMoveState = MoveStates.MOVETOBATTLE;
         if (isPlayerControlled)
         {
+            Debug.Log(cameraBehaviourScript);
             StartCoroutine(cameraBehaviourScript.MoveToBattlePos(moveTime));
         }
 
