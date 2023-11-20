@@ -36,24 +36,4 @@ public class EntityBulgar : BaseEntityScipt
         MovePositionsChecker();
     }
 
-    //public override IEnumerator Action(List<GameObject> enemies, List<GameObject> friends)
-    //{
-    //    Debug.Log("bulgar????");
-
-    //    currentMoveState = MoveStates.MOVETOBATTLE;
-    //    yield return new WaitForSeconds(moveTime);
-
-    //    currentMoveState = MoveStates.WAIT;
-
-    //    GameObject enemyToAttack = ChooseRandomEntity(friends);
-    //    BaseEntityScipt entityScript = enemyToAttack.GetComponent<BaseEntityScipt>();
-    //    entityScript.healthSystem.DealDamage(Random.Range(1, 2));
-    //    animator.SetTrigger("Attack");
-
-    //    yield return new WaitForSeconds(1);
-
-    //    currentMoveState = MoveStates.MOVETOSTART;
-    //    yield return new WaitForSeconds(moveTime);
-    //    currentMoveState = MoveStates.WAIT;
-    //}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,8 @@ public abstract class BaseEntityScipt : MonoBehaviour
     public HealthSystem healthSystem;
     public MoralitySystem moralitySystem;
     public EnergySystem energySystem;
-    public Vector3 startPosition;
-    public Vector3 battlePosition;
+    [NonSerialized]public Vector3 startPosition;
+    [NonSerialized] public Vector3 battlePosition;
     public float moveTime;
     public int initiative;
     public List<BaseAttackScript> attackScripts = new();
@@ -72,24 +73,13 @@ public abstract class BaseEntityScipt : MonoBehaviour
         yield return new WaitForSeconds(moveTime);
         currentMoveState = MoveStates.WAIT;
     }
-    public GameObject ChooseRandomEntity(List<GameObject> entites)
-    {
-        int entityIndex = Random.Range(0, entites.Count);
-        return entites[entityIndex];
-    }
 
-    public void MoveIntoBattlePos()
+
+    public void MoveIntoPosition(Vector3 from, Vector3 to)
     {
         elapsedTime += Time.deltaTime;
         float percentageComplete = elapsedTime / moveTime;
-        gameObject.transform.position = Vector3.Lerp(startPosition, battlePosition, percentageComplete);
-    }
-
-    public void MoveBackToStartPos()
-    {
-        elapsedTime += Time.deltaTime;
-        float percentageComplete = elapsedTime / moveTime;
-        gameObject.transform.position = Vector3.Lerp(battlePosition, startPosition, percentageComplete);
+        gameObject.transform.position = Vector3.Lerp(from, to, percentageComplete);
     }
 
     protected void MovePositionsChecker()
@@ -100,10 +90,10 @@ public abstract class BaseEntityScipt : MonoBehaviour
                 elapsedTime = 0;
                 break;
             case (MoveStates.MOVETOSTART):
-                MoveBackToStartPos();
+                MoveIntoPosition(startPosition, battlePosition);
                 break;
             case (MoveStates.MOVETOBATTLE):
-                MoveIntoBattlePos();
+                MoveIntoPosition(battlePosition, startPosition);
                 break;
         }
     }

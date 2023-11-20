@@ -5014,11 +5014,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEntities:
-  - {fileID: 7094274055752672764, guid: 9918013793998e047bc33bc6d144fd15, type: 3}
-  - {fileID: 7094274055752672764, guid: 9918013793998e047bc33bc6d144fd15, type: 3}
+  - {fileID: 529970812445225150, guid: d497399593bc9de4da3d4384080010f0, type: 3}
+  - {fileID: 529970812445225150, guid: d497399593bc9de4da3d4384080010f0, type: 3}
   enemyEntities:
-  - {fileID: 4104334325559378301, guid: b36fedb8e12e6a546876d849e62159c9, type: 3}
-  - {fileID: 4104334325559378301, guid: b36fedb8e12e6a546876d849e62159c9, type: 3}
+  - {fileID: 7296097949698629332, guid: 42c774d7104292e4daa67b9aeb3cf9d4, type: 3}
+  - {fileID: 7296097949698629332, guid: 42c774d7104292e4daa67b9aeb3cf9d4, type: 3}
   playerEntitiesAlive: []
   enemyEntitiesAlive: []
   attackQueue: []
@@ -5028,12 +5028,14 @@ MonoBehaviour:
   BottomMenu: {fileID: 483239617}
   AttackingEntityScript: {fileID: 0}
   icannotprocess: 0
-  playerBattlePositions:
-  - {x: -5, y: 0, z: 1}
-  - {x: -6, y: 0, z: -3}
-  enemyBattlePositions:
+  playerStartPositions:
+  - {x: -4, y: 0, z: 2}
+  - {x: -6, y: 0, z: 3}
+  enemyStartPositions:
+  - {x: 4, y: 0, z: 2}
   - {x: 6, y: 0, z: 3}
-  - {x: 5, y: 0, z: -2.5}
+  playerBattlePos: {x: 0, y: 0, z: 0}
+  enemyBattlePos: {x: 0, y: 0, z: 0}
   hasSelectedInput: 0
   elapsedTime: 0
 --- !u!1 &1968382772

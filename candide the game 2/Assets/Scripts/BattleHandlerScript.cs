@@ -18,8 +18,11 @@ public class BattleHandlerScript : MonoBehaviour
     public BaseEntityScipt AttackingEntityScript;
     public bool icannotprocess;
 
-    [SerializeField] private List<Vector3> playerBattlePositions;
-    [SerializeField] private List<Vector3> enemyBattlePositions;
+    [SerializeField] private List<Vector3> playerStartPositions;
+    [SerializeField] private List<Vector3> enemyStartPositions;
+
+    [SerializeField] private Vector3 playerBattlePos = new Vector3(-1, 0, 0);
+    [SerializeField] private Vector3 enemyBattlePos = new Vector3(1, 0, 0);
 
     public bool hasSelectedInput;
     public float elapsedTime;
@@ -45,7 +48,10 @@ public class BattleHandlerScript : MonoBehaviour
         {
             GameObject playerEntity = Instantiate(playerEntities[i]);
             playerEntitiesAlive.Add(playerEntity);
-            playerEntity.transform.position = playerBattlePositions[i];
+            playerEntity.transform.position = playerStartPositions[i];
+            BaseEntityScipt script = playerEntity.GetComponent<BaseEntityScipt>();
+            script.startPosition = playerStartPositions[i];
+            script.battlePosition = playerBattlePos;
         }
 
         //spawn enemies
@@ -53,14 +59,11 @@ public class BattleHandlerScript : MonoBehaviour
         {
             GameObject enemyEntity = Instantiate(enemyEntities[i]);
             enemyEntitiesAlive.Add(enemyEntity);
-            enemyEntity.transform.position = enemyBattlePositions[i];
+            enemyEntity.transform.position = enemyStartPositions[i];
+            BaseEntityScipt script = enemyEntity.GetComponent<BaseEntityScipt>();
+            script.startPosition = enemyStartPositions[i];
+            script.battlePosition = enemyBattlePos;
         }
-    }
-
-    private void SetAliveEntities()
-    {
-        playerEntitiesAlive = playerEntities;
-        enemyEntitiesAlive = enemyEntities;
     }
 
     private List<BaseEntityScipt> SortEntityByAttackInitiative()
