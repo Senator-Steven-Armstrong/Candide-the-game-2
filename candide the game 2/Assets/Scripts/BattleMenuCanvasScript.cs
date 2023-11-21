@@ -25,12 +25,6 @@ public class BattleMenuCanvasScript : MonoBehaviour
         battleHandlerScript = GameObject.Find("BattleHandler").GetComponent<BattleHandlerScript>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void ShowActionMenu(GameObject buttonClicked)
     {
 
@@ -100,7 +94,7 @@ public class BattleMenuCanvasScript : MonoBehaviour
 
             // Länkar ihop knappen och attacken mycket mycket viktig
             Attacks[i].buttonScript = AttackUI.GetComponent<ActionButtonScript>();
-            Attacks[i].buttonScript.SetVariables(Attacks[i].stringName, Attacks[i].stringAttackDamage, Attacks[i].stringDebateDamage);
+            Attacks[i].buttonScript.SetVariables(Attacks[i].stringName, Attacks[i].stringAttackDamage, Attacks[i].stringDebateDamage, Attacks[i].stringDescription);
 
             UnityAction action = () => Attacks[i2].Action(battleHandlerScript.enemyEntitiesAlive, battleHandlerScript.playerEntitiesAlive, battleHandlerScript.AttackingEntityScript);
             UnityAction stupid = () => SetStupidVariable();
@@ -127,7 +121,7 @@ public class BattleMenuCanvasScript : MonoBehaviour
 
             // Länkar ihop knappen och attacken mycket mycket viktig
             Debates[i].buttonScript = DebateUI.GetComponent<ActionButtonScript>();
-            Debates[i].buttonScript.SetVariables(Debates[i].stringName, Debates[i].stringAttackDamage, Debates[i].stringDebateDamage);
+            Debates[i].buttonScript.SetVariables(Debates[i].stringName, Debates[i].stringAttackDamage, Debates[i].stringDebateDamage, Debates[i].stringDescription);
 
             // fixar button press för attacken'
             UnityAction action = () => Debates[i2].Action(battleHandlerScript.enemyEntitiesAlive, battleHandlerScript.playerEntitiesAlive, battleHandlerScript.AttackingEntityScript);

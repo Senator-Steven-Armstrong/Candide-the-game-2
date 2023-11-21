@@ -11,8 +11,6 @@ public class BattleHandlerScript : MonoBehaviour
     public List<GameObject> playerEntitiesAlive;
     public List<GameObject> enemyEntitiesAlive;
     public List<BaseEntityScipt> attackQueue;
-    public Vector3 friendAttackPos;
-    public Vector3 enemyAttackPos;
     public GameObject ActionMenu;
     public GameObject BottomMenu;
     public BaseEntityScipt AttackingEntityScript;

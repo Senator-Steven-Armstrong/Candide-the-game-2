@@ -19,6 +19,7 @@ public class AttackBasic : BaseAttackScript
         stringName = "Ball slapper";
         stringAttackDamage = "6";
         stringDebateDamage = "0";
+        stringDescription = "Slap around your enemies balls";
 
         ExtendVariables();
     }

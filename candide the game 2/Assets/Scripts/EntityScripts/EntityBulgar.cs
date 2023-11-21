@@ -7,7 +7,7 @@ public class EntityBulgar : BaseEntityScipt
     public override void AiChooseMove(List<GameObject> enemies, List<GameObject> friends, BaseEntityScipt currentEntity)
     {
 
-        if(Random.Range(0, 2) == 0)
+        if(Random.Range(0, 10) == 0)
         {
             //ATTACK
             int index = Random.Range(0, currentEntity.attackScripts.Count);

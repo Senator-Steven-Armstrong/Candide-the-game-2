@@ -158,7 +158,7 @@ MonoBehaviour:
   healthSystem: {fileID: 3577472803261104190}
   moralitySystem: {fileID: 1618521580708149266}
   energySystem: {fileID: 7426468520643089703}
-  moveTime: 0.2
+  moveTime: 0.5
   initiative: 9
   isPlayerControlled: 1
   cameraBehaviourScript: {fileID: 0}

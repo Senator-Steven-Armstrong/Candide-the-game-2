@@ -16,6 +16,7 @@ public abstract class BaseEntityScipt : MonoBehaviour
     public List<BaseAttackScript> attackScripts = new();
     public List<BaseDebateScript> debateScripts = new();
     public bool isPlayerControlled;
+    
 
     public CameraBehaviourScript cameraBehaviourScript;
 
@@ -75,7 +76,7 @@ public abstract class BaseEntityScipt : MonoBehaviour
     }
 
 
-    public void MoveIntoPosition(Vector3 from, Vector3 to)
+    public void MoveIntoPosition(Vector3 to, Vector3 from)
     {
         elapsedTime += Time.deltaTime;
         float percentageComplete = elapsedTime / moveTime;
@@ -100,5 +101,6 @@ public abstract class BaseEntityScipt : MonoBehaviour
 
     public abstract void AiChooseMove(List<GameObject> enemies, List<GameObject> friends, BaseEntityScipt currentEntity);
 
+    
 
 }

@@ -10,6 +10,7 @@ public class DebateBasic : BaseDebateScript
         GameObject enemyToAttack = enemies[Random.Range(0, enemies.Count)]; ;
         BaseEntityScipt entityScript = enemyToAttack.GetComponent<BaseEntityScipt>();
         entityScript.moralitySystem.DealDamage(6);
+      
     }
 
     public override void SetVariables()
@@ -17,6 +18,7 @@ public class DebateBasic : BaseDebateScript
         stringName = "Candide balls";
         stringAttackDamage = "0";
         stringDebateDamage = "10";
+        stringDescription = "so basically you die";
 
         ExtendVariables();
     }

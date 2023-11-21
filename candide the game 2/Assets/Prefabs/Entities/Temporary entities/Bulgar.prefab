@@ -158,9 +158,7 @@ MonoBehaviour:
   healthSystem: {fileID: 1528501334534416484}
   moralitySystem: {fileID: 7858091081896541657}
   energySystem: {fileID: 8385927715816844701}
-  startPosition: {x: 0, y: 0, z: 0}
-  battlePosition: {x: 2, y: 0, z: 0}
-  moveTime: 0.4
+  moveTime: 0.5
   initiative: 0
   isPlayerControlled: 0
   cameraBehaviourScript: {fileID: 0}
