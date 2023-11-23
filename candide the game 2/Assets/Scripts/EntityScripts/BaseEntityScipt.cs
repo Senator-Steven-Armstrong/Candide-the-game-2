@@ -16,6 +16,10 @@ public abstract class BaseEntityScipt : MonoBehaviour
     public List<BaseAttackScript> attackScripts = new();
     public List<BaseDebateScript> debateScripts = new();
     public bool isPlayerControlled;
+
+    public GameObject HealthBarPrefab;
+    public GameObject MoralityBarPrefab;
+    public GameObject EnergyBarPrefab;
     
 
     public CameraBehaviourScript cameraBehaviourScript;
