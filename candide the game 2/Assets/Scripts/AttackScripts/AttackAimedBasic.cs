@@ -16,6 +16,7 @@ public class AttackAimedBasic : BaseAttackScript
 
     public override void SetVariables()
     {
+        willChooseTargets = true;
         stringName = "Gun";
         stringAttackDamage = "0-3";
         stringDebateDamage = "0";

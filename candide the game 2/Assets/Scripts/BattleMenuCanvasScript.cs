@@ -103,6 +103,15 @@ public class BattleMenuCanvasScript : MonoBehaviour
             Button button = AttackUI.GetComponent<Button>();
             button.onClick.AddListener(action);
             button.onClick.AddListener(stupid);
+            if (Attacks[i2].willChooseTargets)
+            {
+
+            }
+            else
+            {
+                gameObject.SetActive(false);
+                button.onClick.AddListener(stupid);
+            }
         }
     }
 
@@ -129,7 +138,16 @@ public class BattleMenuCanvasScript : MonoBehaviour
 
             Button button = DebateUI.GetComponent<Button>();
             button.onClick.AddListener(action);
-            button.onClick.AddListener(stupid);
+            if (Debates[i2].willChooseTargets)
+            {
+
+            }
+            else
+            {
+                battleHandlerScript.ActionMenu.SetActive(false);
+                button.onClick.AddListener(stupid);
+            }
+            
         }
     }
 

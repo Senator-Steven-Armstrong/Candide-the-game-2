@@ -8,11 +8,13 @@ public class HealthSystem : MonoBehaviour
     public float currentHealth;
     public float maxHealth;
 
-    public Image healthBar;
+    public BarValueScript healthBar;
 
     private void Start()
     {
         currentHealth = maxHealth;
+        if (healthBar != null)
+            healthBar.SetBarValue(maxHealth, currentHealth);
     }
     public void DealDamage(float damage)
     {
@@ -24,7 +26,8 @@ public class HealthSystem : MonoBehaviour
         {
             currentHealth -= damage;
         }
-        SetHealthbar();
+        if (healthBar != null)
+            healthBar.SetBarValue(maxHealth, currentHealth);
     }
 
     public void HealForAmount(float healAmount)
@@ -37,7 +40,8 @@ public class HealthSystem : MonoBehaviour
         {
             currentHealth += healAmount;
         }
-        SetHealthbar();
+        if (healthBar != null)
+            healthBar.SetBarValue(maxHealth, currentHealth);
     }
 
     public void KillEntity()
@@ -45,10 +49,6 @@ public class HealthSystem : MonoBehaviour
         currentHealth = 0;
     }
 
-    private void SetHealthbar()
-    {
-        if(healthBar != null) 
-        healthBar.fillAmount = currentHealth / maxHealth;
-    }
+
 
 }

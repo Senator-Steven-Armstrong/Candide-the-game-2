@@ -108,6 +108,7 @@ public class BattleHandlerScript : MonoBehaviour
             else if (attackQueue[i].isPlayerControlled)
             {
                 yield return StartCoroutine(WaitForInput());
+
             }
             
             yield return StartCoroutine(attackQueue[i].MoveFromBattle());

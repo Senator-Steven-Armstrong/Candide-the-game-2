@@ -8,11 +8,13 @@ public class MoralitySystem : MonoBehaviour
     public float currentMorality;
     public float maxMorality;
 
-    public Image moralityBar;
+    public BarValueScript moralityBar;
 
     private void Start()
     {
         currentMorality = maxMorality;
+        if(moralityBar != null )
+            moralityBar.SetBarValue(maxMorality, currentMorality);
     }
 
     public void DealDamage(float damage)
@@ -25,7 +27,8 @@ public class MoralitySystem : MonoBehaviour
         {
             currentMorality -= damage;
         }
-        SetMoralitybar();
+        if (moralityBar != null)
+            moralityBar.SetBarValue(maxMorality, currentMorality);
     }
 
     public void HealForAmount(float healAmount)
@@ -38,7 +41,8 @@ public class MoralitySystem : MonoBehaviour
         {
             currentMorality += healAmount;
         }
-        SetMoralitybar();
+        if (moralityBar != null)
+            moralityBar.SetBarValue(maxMorality, currentMorality);
     }
 
     public void RetireEnemy()
@@ -46,11 +50,5 @@ public class MoralitySystem : MonoBehaviour
 
         currentMorality = 0;
         
-    }
-
-    private void SetMoralitybar()
-    {
-        if(moralityBar != null)
-        moralityBar.fillAmount = currentMorality / maxMorality;
     }
 }

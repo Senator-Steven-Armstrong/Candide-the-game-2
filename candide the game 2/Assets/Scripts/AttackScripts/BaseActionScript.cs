@@ -11,6 +11,7 @@ public abstract class BaseActionScript
     public string stringDescription;
     public ActionButtonScript buttonScript;
     [NonSerialized]public bool icannotprocess = false;
+    public bool willChooseTargets = false;
 
     public abstract void Action(List<GameObject> enemies, List<GameObject> friends, BaseEntityScipt currentEntity);
 
