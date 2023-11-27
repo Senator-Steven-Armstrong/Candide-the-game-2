@@ -102,14 +102,8 @@ public class BattleMenuCanvasScript : MonoBehaviour
             // fixar button press för attacken
             Button button = AttackUI.GetComponent<Button>();
             button.onClick.AddListener(action);
-            button.onClick.AddListener(stupid);
-            if (Attacks[i2].willChooseTargets)
+            if (!Attacks[i2].willChooseTargets)
             {
-
-            }
-            else
-            {
-                gameObject.SetActive(false);
                 button.onClick.AddListener(stupid);
             }
         }
@@ -138,13 +132,8 @@ public class BattleMenuCanvasScript : MonoBehaviour
 
             Button button = DebateUI.GetComponent<Button>();
             button.onClick.AddListener(action);
-            if (Debates[i2].willChooseTargets)
+            if (!Debates[i2].willChooseTargets)
             {
-
-            }
-            else
-            {
-                battleHandlerScript.ActionMenu.SetActive(false);
                 button.onClick.AddListener(stupid);
             }
             

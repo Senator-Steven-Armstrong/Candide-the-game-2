@@ -38,4 +38,10 @@ public abstract class BaseActionScript
             yield return null;
         }
     }
+
+    public void ChooseEntity(List<GameObject> enemies, List<GameObject> friends, BaseEntityScipt currentEntity)
+    {
+
+    }
+        
 }
