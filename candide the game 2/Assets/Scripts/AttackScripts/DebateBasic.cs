@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class DebateBasic : BaseDebateScript
 {
-    public override void Action(List<GameObject> enemies, List<GameObject> friends, BaseEntityScipt currentEntity)
+    public override void ChooseEntities(List<GameObject> enemies, List<GameObject> friends, BaseEntityScipt currentEntity)
     {
-        currentEntity.animator.SetTrigger("Debate");
-        GameObject enemyToAttack = enemies[Random.Range(0, enemies.Count)]; ;
-        BaseEntityScipt entityScript = enemyToAttack.GetComponent<BaseEntityScipt>();
-        entityScript.moralitySystem.DealDamage(6);
-      
+        List<GameObject> entities = new List<GameObject>
+        {
+            enemies[Random.Range(0, enemies.Count)]
+        };
+        Action(entities, currentEntity);
     }
 
-    public override void SetVariables()
+    public override void Action(List<GameObject> affectedEntites, BaseEntityScipt currentEntity)
+    {
+        currentEntity.animator.SetTrigger("Debate");
+        for (int i = 0; i < affectedEntites.Count; i++)
+        {
+            BaseEntityScipt entityScript = affectedEntites[i].GetComponent<BaseEntityScipt>();
+            entityScript.moralitySystem.DealDamage(6);
+        }
+    }
+      
+    
+
+    public override void SetVariables(List<GameObject> enemies = null, List<GameObject> friends = null)
     {
         stringName = "Candide balls";
         stringAttackDamage = "0";

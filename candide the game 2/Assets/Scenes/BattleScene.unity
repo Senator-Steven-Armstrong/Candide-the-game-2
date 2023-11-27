@@ -767,7 +767,8 @@ MonoBehaviour:
   - {fileID: 701924575}
   - {fileID: 1821751214}
   OccupiedActionSpaces: []
-  ActionUIPrefab: {fileID: 8335902617299046325, guid: cc92a7411736b374bb2ca669ac48d37e, type: 3}
+  ActionUIPrefab: {fileID: 8335902617299046325, guid: 18a83fe3621615c4fb1b5ac07886284c, type: 3}
+  EntityButtonPrefab: {fileID: 8335902617299046325, guid: cc92a7411736b374bb2ca669ac48d37e, type: 3}
 --- !u!1 &929298708
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,7 +892,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.11152634, y: -0, z: -0, w: 0.9937615}
-  m_LocalPosition: {x: 0, y: 2.8, z: -10.9}
+  m_LocalPosition: {x: 0, y: 3.8, z: -10.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -912,7 +913,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveTime: 0.5
   OverviewPosition: {x: 0, y: 0, z: 0}
-  BattlePostion: {x: 0, y: 2.4, z: -6.5}
+  BattlePostion: {x: 0, y: 3.5, z: -8}
   currentState: 0
 --- !u!1 &984160136
 GameObject:

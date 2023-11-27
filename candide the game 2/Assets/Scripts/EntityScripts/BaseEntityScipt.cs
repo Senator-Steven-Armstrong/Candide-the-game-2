@@ -20,7 +20,9 @@ public abstract class BaseEntityScipt : MonoBehaviour
     public GameObject HealthBarPrefab;
     public GameObject MoralityBarPrefab;
     public GameObject EnergyBarPrefab;
-    
+
+    public string stringName;
+    public Sprite portrait;
 
     public CameraBehaviourScript cameraBehaviourScript;
 

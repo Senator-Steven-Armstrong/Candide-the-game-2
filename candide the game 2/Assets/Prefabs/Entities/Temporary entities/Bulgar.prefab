@@ -165,6 +165,8 @@ MonoBehaviour:
   HealthBarPrefab: {fileID: 0}
   MoralityBarPrefab: {fileID: 0}
   EnergyBarPrefab: {fileID: 0}
+  stringName: Bulgar
+  portrait: {fileID: 404431177, guid: 8585c34d25e5712418ea34305720af1d, type: 3}
   cameraBehaviourScript: {fileID: 0}
   elapsedTime: 0
 --- !u!114 &1528501334534416484
