@@ -769,6 +769,7 @@ MonoBehaviour:
   OccupiedActionSpaces: []
   ActionUIPrefab: {fileID: 8335902617299046325, guid: 18a83fe3621615c4fb1b5ac07886284c, type: 3}
   EntityButtonPrefab: {fileID: 8335902617299046325, guid: cc92a7411736b374bb2ca669ac48d37e, type: 3}
+  selectArrowPrefab: {fileID: 1205040370992051288, guid: 7a32407633020254cb0c5f3f0a535f39, type: 3}
 --- !u!1 &929298708
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static System.Collections.Specialized.BitVector32;
 
 public class BattleMenuCanvasScript : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class BattleMenuCanvasScript : MonoBehaviour
     public List<GameObject> OccupiedActionSpaces = new();
     public GameObject ActionUIPrefab;
     public GameObject EntityButtonPrefab;
+    public GameObject selectArrowPrefab;
+     
 
     // Start is called before the first frame update
     void Start()
@@ -98,6 +101,7 @@ public class BattleMenuCanvasScript : MonoBehaviour
             Attacks[i].buttonScript = AttackUI.GetComponent<ActionButtonScript>();
             Attacks[i].buttonScript.SetVariables(Attacks[i].stringName, Attacks[i].stringAttackDamage, Attacks[i].stringDebateDamage, Attacks[i].stringDescription);
 
+
             UnityAction action = () => Attacks[i2].ChooseEntities(battleHandlerScript.enemyEntitiesAlive, battleHandlerScript.playerEntitiesAlive, battleHandlerScript.AttackingEntityScript);
             UnityAction stopWaitingForInput = () => StopWaitingForInputVariable();
             UnityAction buttonDisable = () => DisableButton(button);
@@ -112,12 +116,18 @@ public class BattleMenuCanvasScript : MonoBehaviour
             }
             else
             {
-                UnityAction fillPanelWithEntities = () => FillActionPanelWithEntities(Attacks[i2].possibleEntitiesToSelect);
+                
+                UnityAction fillPanelWithEntities = () => MakeEntitiesSelectable(Attacks[i2].possibleEntitiesToSelect, Attacks[i2]);
                 Debug.Log(Attacks[i2].possibleEntitiesToSelect);
                 button.onClick.AddListener(fillPanelWithEntities);
                 
             }
         }
+    }
+
+    public void dosometing(GameObject entity)
+    {
+        Debug.Log(entity);  
     }
 
     public void FillActionPanelWithEntities(List<GameObject> targets)
@@ -145,7 +155,22 @@ public class BattleMenuCanvasScript : MonoBehaviour
 
             //med button variablen ska du lägga till onclick och typ returnera det objectet, lägga det i en lista och sedan när listan är tillcäkligt lång ska du binka och boonka
         }
-        
+    }
+
+    public void MakeEntitiesSelectable(List<GameObject> selectableEntities, BaseActionScript action)
+    {
+        for (int i = 0; i < selectableEntities.Count; i++)
+        {
+            Vector3 spawnPosition = selectableEntities[i].GetComponent<BaseEntityScipt>().BarsSpriteHolder.transform.position;
+            spawnPosition.x = selectableEntities[i].transform.position.x;
+            spawnPosition.y += 0.5f;
+            Instantiate(selectArrowPrefab, spawnPosition, Quaternion.identity);
+
+            Collider2D collider = selectableEntities[i].GetComponent<Collider2D>();
+            collider.enabled = true;
+
+            
+        }
     }
 
     //public void FillActionPanel(bool isAttack)

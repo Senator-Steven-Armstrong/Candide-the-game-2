@@ -17,18 +17,15 @@ public abstract class BaseEntityScipt : MonoBehaviour
     public List<BaseDebateScript> debateScripts = new();
     public bool isPlayerControlled;
 
-    public GameObject HealthBarPrefab;
-    public GameObject MoralityBarPrefab;
-    public GameObject EnergyBarPrefab;
+    public GameObject BarsSpriteHolder;
 
     public string stringName;
     public Sprite portrait;
 
     public CameraBehaviourScript cameraBehaviourScript;
+    [NonSerialized]public BaseActionScript currentSelectedAction;
 
-    public float elapsedTime;
-
-    public BaseAttackScript attack1;
+    private float elapsedTime;
 
     public enum MoveStates
     {
