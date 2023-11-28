@@ -19,7 +19,7 @@ public class DebateBasic : BaseDebateScript
         for (int i = 0; i < affectedEntites.Count; i++)
         {
             BaseEntityScipt entityScript = affectedEntites[i].GetComponent<BaseEntityScipt>();
-            entityScript.moralitySystem.DealDamage(6);
+            entityScript.moralitySystem.DealDamage(2);
         }
     }
       

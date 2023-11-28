@@ -6,10 +6,11 @@ public class EntityHitboxScript : MonoBehaviour
 {
     private BattleMenuCanvasScript canvasScript;
 
-
     private void OnMouseDown()
     {
+        gameObject.GetComponent<BaseEntityScipt>().selectArrow.gameObject.GetComponent<BopScript>().isBoppin = true;
+
         canvasScript = GameObject.Find("Battle Menu Canvas").GetComponent<BattleMenuCanvasScript>();
-        canvasScript.dosometing(gameObject);
+        canvasScript.CheckSelectedEntity(gameObject);
     }
 }

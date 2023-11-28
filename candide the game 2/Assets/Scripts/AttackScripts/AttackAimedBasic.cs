@@ -23,12 +23,16 @@ public class AttackAimedBasic : BaseAttackScript
 
     public override void SetVariables(List<GameObject> enemies = null, List<GameObject> friends = null)
     {
+        possibleEntitiesToSelect.Clear();
+        selectedEntites.Clear();
+
         willChooseTargets = true;
         stringName = "Gun";
         stringAttackDamage = "0-3";
         stringDebateDamage = "0";
         stringDescription = "Literally just shoot your enemy";
         numOfEntitesToSelect = 2;
+        canOnlySelectDifferentTypes = true;
         for (int i = 0; i < enemies.Count; i++)
         {
             possibleEntitiesToSelect.Add(enemies[i]);

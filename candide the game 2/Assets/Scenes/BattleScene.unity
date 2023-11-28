@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &55639345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 55639346}
+  m_Layer: 0
+  m_Name: ArrowHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &55639346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55639345}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 474.90137, y: 392.69794, z: 25.281677}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &143281850
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,6 +801,7 @@ MonoBehaviour:
   ActionUIPrefab: {fileID: 8335902617299046325, guid: 18a83fe3621615c4fb1b5ac07886284c, type: 3}
   EntityButtonPrefab: {fileID: 8335902617299046325, guid: cc92a7411736b374bb2ca669ac48d37e, type: 3}
   selectArrowPrefab: {fileID: 1205040370992051288, guid: 7a32407633020254cb0c5f3f0a535f39, type: 3}
+  arrowHolder: {fileID: 55639345}
 --- !u!1 &929298708
 GameObject:
   m_ObjectHideFlags: 0

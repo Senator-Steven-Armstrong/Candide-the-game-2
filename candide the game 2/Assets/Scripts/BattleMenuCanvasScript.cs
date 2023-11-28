@@ -21,7 +21,9 @@ public class BattleMenuCanvasScript : MonoBehaviour
     public GameObject ActionUIPrefab;
     public GameObject EntityButtonPrefab;
     public GameObject selectArrowPrefab;
-     
+    public GameObject arrowHolder;
+
+    private BaseActionScript currentAction;
 
     // Start is called before the first frame update
     void Start()
@@ -53,12 +55,12 @@ public class BattleMenuCanvasScript : MonoBehaviour
                 if (buttonClicked == AttackButton)
                 {
                     Debug.Log("its killing time");
-                    FillActionPanelAttack();
+                    FillActionPanel(true);
                 }
                 else if (buttonClicked == DebateButton)
                 {
                     Debug.Log("its debating time");
-                    FillActionPanelDebate();
+                    FillActionPanel(false);
                 }
             }
         }
@@ -70,12 +72,12 @@ public class BattleMenuCanvasScript : MonoBehaviour
             if (buttonClicked == AttackButton)
             {
                 Debug.Log("its killing time");
-                FillActionPanelAttack();
+                FillActionPanel(true);
             }
             else if (buttonClicked == DebateButton)
             {
                 Debug.Log("its debating time");
-                FillActionPanelDebate();
+                FillActionPanel(false);
             }
         }
 
@@ -116,102 +118,137 @@ public class BattleMenuCanvasScript : MonoBehaviour
             }
             else
             {
-                
-                UnityAction fillPanelWithEntities = () => MakeEntitiesSelectable(Attacks[i2].possibleEntitiesToSelect, Attacks[i2]);
+                currentAction = Attacks[i2];
+                UnityAction makeEntitiesSelectable = () => MakeEntitiesSelectable(Attacks[i2].possibleEntitiesToSelect);
                 Debug.Log(Attacks[i2].possibleEntitiesToSelect);
-                button.onClick.AddListener(fillPanelWithEntities);
+                button.onClick.AddListener(makeEntitiesSelectable);
                 
             }
         }
     }
 
-    public void dosometing(GameObject entity)
+    public void CheckSelectedEntity(GameObject entity)
     {
+        //När en entity är vald
         Debug.Log(entity);  
-    }
-
-    public void FillActionPanelWithEntities(List<GameObject> targets)
-    {
-        ResetActionPanel();
-        Debug.Log(targets);
-        for (int i = 0; i < targets.Count; i++)
+        if(currentAction.canOnlySelectDifferentTypes)
         {
-            BaseEntityScipt entityScript = targets[i].GetComponent<BaseEntityScipt>();
+            if(!currentAction.selectedEntites.Contains(entity))
+            {
+                currentAction.selectedEntites.Add(entity);
+            }
+        }
+        else
+        {
+            currentAction.selectedEntites.Add(entity);
+        }
 
-            GameObject EntityUI = Instantiate(EntityButtonPrefab, ActionSpaces[i].transform);
-            OccupiedActionSpaces.Add(EntityUI);
-            EntityUI.transform.SetParent(ActionSpaces[i].transform);
+        // Om alla entities är valda
+        if(currentAction.selectedEntites.Count >= currentAction.numOfEntitesToSelect)
+        {
+            // stoppa slection och kör action
+            currentAction.Action(currentAction.selectedEntites, battleHandlerScript.AttackingEntityScript);
 
-            Button button = EntityUI.GetComponent<Button>();
-            EntityButtonScript buttonScript = EntityUI.GetComponent<EntityButtonScript>();
+            //förstör pilarna
+            for (int i = 0; i < currentAction.possibleEntitiesToSelect.Count; i++)
+            {
+                Destroy(arrowHolder.transform.GetChild(i).gameObject);
+            }
 
-            buttonScript.entity = targets[i];
-            Debug.Log(buttonScript.entity);
+            //stänger av hitbox
+            for (int i = 0; i < currentAction.possibleEntitiesToSelect.Count; i++)
+            {
+                currentAction.possibleEntitiesToSelect[i].gameObject.GetComponent<Collider2D>().enabled = false;
+            }
 
-            buttonScript.SetVariables();
+            CameraBehaviourScript cam = Camera.main.GetComponent<CameraBehaviourScript>();
+            StartCoroutine(cam.MoveToBattlePos(0.2f));
 
-
-
-
-            //med button variablen ska du lägga till onclick och typ returnera det objectet, lägga det i en lista och sedan när listan är tillcäkligt lång ska du binka och boonka
+            StopWaitingForInputVariable();
         }
     }
 
-    public void MakeEntitiesSelectable(List<GameObject> selectableEntities, BaseActionScript action)
+    public void MakeEntitiesSelectable(List<GameObject> selectableEntities)
     {
+        CameraBehaviourScript cam = Camera.main.GetComponent<CameraBehaviourScript>();
+        StartCoroutine(cam.MoveToOverviewPos(0.3f));
+        BottomMenu.SetActive(false);
+        ActionMenu.SetActive(false);
+
         for (int i = 0; i < selectableEntities.Count; i++)
         {
-            Vector3 spawnPosition = selectableEntities[i].GetComponent<BaseEntityScipt>().BarsSpriteHolder.transform.position;
+            BaseEntityScipt entityScript = selectableEntities[i].GetComponent<BaseEntityScipt>();
+            Vector3 spawnPosition = entityScript.BarsSpriteHolder.transform.position;
             spawnPosition.x = selectableEntities[i].transform.position.x;
             spawnPosition.y += 0.5f;
-            Instantiate(selectArrowPrefab, spawnPosition, Quaternion.identity);
+            GameObject arrow = Instantiate(selectArrowPrefab, spawnPosition, Quaternion.identity);
+            arrow.transform.SetParent(arrowHolder.transform, true);
+            entityScript.selectArrow = arrow;
 
-            Collider2D collider = selectableEntities[i].GetComponent<Collider2D>();
-            collider.enabled = true;
+            selectableEntities[i].GetComponent<Collider2D>().enabled = true;
+            
 
             
         }
     }
 
-    //public void FillActionPanel(bool isAttack)
-    //{
-    //     actions = new();
+    public void FillActionPanel(bool isAttack)
+    {
+        List<BaseActionScript> actions = new();
 
-    //    if (isAttack)
-    //    {
-    //        actions = battleHandlerScript.AttackingEntityScript.attackScripts;
-    //    }
-    //    else
-    //    {
-    //        List<BaseAttackScript> actions = new List<BaseAttackScript>();
-    //    }
+        if (isAttack)
+        {
+            for (int i = 0; i < battleHandlerScript.AttackingEntityScript.attackScripts.Count; i++)
+            {
+                actions.Add(battleHandlerScript.AttackingEntityScript.attackScripts[i]);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < battleHandlerScript.AttackingEntityScript.debateScripts.Count; i++)
+            {
+                actions.Add(battleHandlerScript.AttackingEntityScript.debateScripts[i]);
+            }
+        }
 
-    //    for (int i = 0; i < actions.Count; i++)
-    //    {
-    //        int i2 = i;
+        for (int i = 0; i < actions.Count; i++)
+        {
+            int i2 = i;
 
-    //        actions[i].SetVariables();
+            actions[i].SetVariables(battleHandlerScript.enemyEntitiesAlive, battleHandlerScript.playerEntitiesAlive);
 
-    //        GameObject AttackUI = Instantiate(ActionUIPrefab, ActionSpaces[i].transform);
-    //        OccupiedActionSpaces.Add(AttackUI);
-    //        AttackUI.transform.SetParent(ActionSpaces[i].transform);
+            GameObject AttackUI = Instantiate(ActionUIPrefab, ActionSpaces[i].transform);
+            Button button = AttackUI.GetComponent<Button>();
+            OccupiedActionSpaces.Add(AttackUI);
+            AttackUI.transform.SetParent(ActionSpaces[i].transform);
 
-    //        // Länkar ihop knappen och attacken mycket mycket viktig
-    //        actions[i].buttonScript = AttackUI.GetComponent<ActionButtonScript>();
-    //        actions[i].buttonScript.SetVariables(actions[i].stringName, actions[i].stringAttackDamage, actions[i].stringDebateDamage, actions[i].stringDescription);
+            // Länkar ihop knappen och attacken mycket mycket viktig
+            actions[i].buttonScript = AttackUI.GetComponent<ActionButtonScript>();
+            actions[i].buttonScript.SetVariables(actions[i].stringName, actions[i].stringAttackDamage, actions[i].stringDebateDamage, actions[i].stringDescription);
 
-    //        UnityAction action = () => actions[i2].Action(battleHandlerScript.enemyEntitiesAlive, battleHandlerScript.playerEntitiesAlive, battleHandlerScript.AttackingEntityScript);
-    //        UnityAction stupid = () => SetStupidVariable();
 
-    //        // fixar button press för attacken
-    //        Button button = AttackUI.GetComponent<Button>();
-    //        button.onClick.AddListener(action);
-    //        if (!actions[i2].willChooseTargets)
-    //        {
-    //            button.onClick.AddListener(stupid);
-    //        }
-    //    }
-    //}
+            UnityAction action = () => actions[i2].ChooseEntities(battleHandlerScript.enemyEntitiesAlive, battleHandlerScript.playerEntitiesAlive, battleHandlerScript.AttackingEntityScript);
+            UnityAction stopWaitingForInput = () => StopWaitingForInputVariable();
+            UnityAction buttonDisable = () => DisableButton(button);
+
+            // fixar button press för attacken
+            button.onClick.AddListener(buttonDisable);
+
+            if (!actions[i2].willChooseTargets)
+            {
+                button.onClick.AddListener(stopWaitingForInput);
+                button.onClick.AddListener(action);
+            }
+            else
+            {
+                currentAction = actions[i2];
+                UnityAction makeEntitiesSelectable = () => MakeEntitiesSelectable(actions[i2].possibleEntitiesToSelect);
+                Debug.Log(actions[i2].possibleEntitiesToSelect);
+                button.onClick.AddListener(makeEntitiesSelectable);
+
+            }
+        }
+    }
 
     public void FillActionPanelDebate()
     {

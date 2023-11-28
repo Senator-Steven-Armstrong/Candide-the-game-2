@@ -25,6 +25,8 @@ public abstract class BaseEntityScipt : MonoBehaviour
     public CameraBehaviourScript cameraBehaviourScript;
     [NonSerialized]public BaseActionScript currentSelectedAction;
 
+    [NonSerialized] public GameObject selectArrow;
+
     private float elapsedTime;
 
     public enum MoveStates

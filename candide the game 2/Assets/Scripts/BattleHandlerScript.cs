@@ -85,10 +85,8 @@ public class BattleHandlerScript : MonoBehaviour
         for (int i = 0; i < attackQueue.Count; i++)
         {
 
-            if(i == 0)
-            {
-                yield return new WaitForSeconds(1.5f);
-            }
+           
+            yield return new WaitForSeconds(1f);
 
             AttackingEntityScript = attackQueue[i];
 
@@ -118,11 +116,11 @@ public class BattleHandlerScript : MonoBehaviour
 
             CheckAliveEntities();
 
-            yield return new WaitForSeconds(1);
         }
 
         if(playerEntitiesAlive.Count == 0 || enemyEntitiesAlive.Count == 0)
         {
+            yield return new WaitForSeconds(1);
             SceneManager.LoadScene(1);
         }
         else

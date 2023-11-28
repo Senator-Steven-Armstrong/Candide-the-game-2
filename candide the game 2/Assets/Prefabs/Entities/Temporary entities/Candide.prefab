@@ -136,7 +136,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7094274055752672764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -209,11 +209,10 @@ MonoBehaviour:
   moveTime: 0.5
   initiative: 9
   isPlayerControlled: 1
-  BarsSpriteHolder: {fileID: 0}
+  BarsSpriteHolder: {fileID: 561122132932171774}
   stringName: Candide
   portrait: {fileID: 38153915, guid: b3e02afeeb4da3e48920271f9729f794, type: 3}
   cameraBehaviourScript: {fileID: 0}
-  elapsedTime: 0
 --- !u!114 &3577472803261104190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 10
+  maxHealth: 30
   healthBar: {fileID: 902593688385443720}
 --- !u!114 &1618521580708149266
 MonoBehaviour:
@@ -242,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMorality: 0
-  maxMorality: 10
+  maxMorality: 30
   moralityBar: {fileID: 4614989770959645978}
 --- !u!114 &7426468520643089703
 MonoBehaviour:
@@ -286,7 +285,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5999355815343119561, guid: 6d0812d585ef6204caaf56c4a3d73c72, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.015000343
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5999355815343119561, guid: 6d0812d585ef6204caaf56c4a3d73c72, type: 3}
       propertyPath: m_LocalPosition.y
@@ -329,6 +328,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d0812d585ef6204caaf56c4a3d73c72, type: 3}
+--- !u!1 &561122132932171774 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1739076785449489581, guid: 6d0812d585ef6204caaf56c4a3d73c72, type: 3}
+  m_PrefabInstance: {fileID: 2300196485248074579}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &902593688385443720 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1399872543605200091, guid: 6d0812d585ef6204caaf56c4a3d73c72, type: 3}

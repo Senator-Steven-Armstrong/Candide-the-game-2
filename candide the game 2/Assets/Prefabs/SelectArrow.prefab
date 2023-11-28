@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6913042298671939163}
   - component: {fileID: 6055404297429854624}
   - component: {fileID: 5603965446137920586}
+  - component: {fileID: 7206831518435182223}
   m_Layer: 0
   m_Name: SelectArrow
   m_TagString: Untagged
@@ -95,5 +96,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c569c251224a224a8865228b7dc7312, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7206831518435182223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205040370992051288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60a42665fed8bb4d85916ff6ab5c6be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
