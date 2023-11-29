@@ -204,9 +204,7 @@ public class BattleMenuCanvasScript : MonoBehaviour
             }
             else
             {
-                UnityAction makeEntitiesSelectable = () => MakeEntitiesSelectable(actions[i2].possibleEntitiesToSelect);
-                UnityAction checkEntitiesSelectable = () => CheckEnergyOnClick(makeEntitiesSelectable, buttonScript);
-                Debug.Log(actions[i2].possibleEntitiesToSelect);
+                UnityAction checkEntitiesSelectable = () => CheckEnergyOnClick(() => MakeEntitiesSelectable(buttonScript.action.possibleEntitiesToSelect), buttonScript);
                 button.onClick.AddListener(checkEntitiesSelectable);
             }
         }
@@ -221,8 +219,6 @@ public class BattleMenuCanvasScript : MonoBehaviour
 
     public void CheckEnergyOnClick(UnityAction function, ActionButtonScript script)
     {
-
-
         if (script.action.CheckEnergy(battleHandlerScript.AttackingEntityScript))
         {
             function.Invoke();

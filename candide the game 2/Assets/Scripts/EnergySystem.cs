@@ -10,7 +10,7 @@ public class EnergySystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxEnergy = 7;
+        maxEnergy = 3;
         currentEnergy = 0;   
     }
 
