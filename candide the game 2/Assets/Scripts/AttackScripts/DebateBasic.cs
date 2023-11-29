@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DebateBasic : BaseDebateScript
 {
+
     public override void ChooseEntities(List<GameObject> enemies, List<GameObject> friends, BaseEntityScipt currentEntity)
     {
         List<GameObject> entities = new List<GameObject>
@@ -27,6 +28,8 @@ public class DebateBasic : BaseDebateScript
 
     public override void SetVariables(List<GameObject> enemies = null, List<GameObject> friends = null)
     {
+        energyGenerated = 1;
+        energyCost = 0;
         stringName = "Candide balls";
         stringAttackDamage = "0";
         stringDebateDamage = "10";

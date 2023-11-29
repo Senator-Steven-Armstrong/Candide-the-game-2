@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AttackAimedBasic : BaseAttackScript
 {
 
     public override void ChooseEntities(List<GameObject> enemies, List<GameObject> friends, BaseEntityScipt currentEntity)
     {
-        // här vette fan vad som ska hända
+        
     }
 
     public override void Action(List<GameObject> affectedEntites, BaseEntityScipt currentEntity)
@@ -25,7 +26,8 @@ public class AttackAimedBasic : BaseAttackScript
     {
         possibleEntitiesToSelect.Clear();
         selectedEntites.Clear();
-
+        energyGenerated = 1;
+        energyCost = 2;
         willChooseTargets = true;
         stringName = "Gun";
         stringAttackDamage = "0-3";

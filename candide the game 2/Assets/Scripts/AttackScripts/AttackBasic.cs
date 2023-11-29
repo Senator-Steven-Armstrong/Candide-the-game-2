@@ -9,11 +9,14 @@ public class AttackBasic : BaseAttackScript
 
     public override void ChooseEntities(List<GameObject> enemies, List<GameObject> friends, BaseEntityScipt currentEntity)
     {
+        Debug.Log("rraaaaah");
         List<GameObject> entities = new List<GameObject>
         {
             enemies[Random.Range(0, enemies.Count)]
         };
         Action(entities, currentEntity);
+        
+        
     }
 
     public override void Action(List<GameObject> affectedEntites, BaseEntityScipt currentEntity)
@@ -30,6 +33,8 @@ public class AttackBasic : BaseAttackScript
 
     public override void SetVariables(List<GameObject> enemies = null, List<GameObject> friends = null)
     {
+        energyGenerated = 1;
+        energyCost = 0;
         stringName = "Ball slapper";
         stringAttackDamage = "6";
         stringDebateDamage = "0";

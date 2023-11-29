@@ -19,6 +19,9 @@ public abstract class BaseActionScript
     public List<GameObject> selectedEntites = new List<GameObject>();
     public List<GameObject> possibleEntitiesToSelect = new List<GameObject>();
 
+    public int energyCost = 0;
+    public int energyGenerated = 0;
+
     public abstract void Action(List<GameObject> affectedEntites, BaseEntityScipt currentEntity);
 
     public abstract void SetVariables(List<GameObject> enemies = null, List<GameObject> friends = null);
@@ -54,9 +57,19 @@ public abstract class BaseActionScript
         
     }
 
-    public void EntityButtonClick()
+    public bool CheckEnergy(BaseEntityScipt entityScript)
     {
-
+        Debug.Log(entityScript.energySystem.currentEnergy);
+        Debug.Log(energyCost);
+        if(entityScript.energySystem.currentEnergy >= energyCost)
+        {
+            entityScript.energySystem.DecreaseEnergy(energyCost);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
         
 }

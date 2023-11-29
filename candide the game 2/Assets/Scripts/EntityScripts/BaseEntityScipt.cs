@@ -26,6 +26,8 @@ public abstract class BaseEntityScipt : MonoBehaviour
     [NonSerialized]public BaseActionScript currentSelectedAction;
 
     [NonSerialized] public GameObject selectArrow;
+    public BaseActionScript currentAction;
+
 
     private float elapsedTime;
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ActionButtonScript : MonoBehaviour
@@ -9,6 +10,7 @@ public class ActionButtonScript : MonoBehaviour
     public Text attackDamage;
     public Text debateDamage;
     public Text description;
+    public BaseActionScript action;
 
     public void SetVariables(string name, string attackDmg, string debateDmg, string desc)
     {

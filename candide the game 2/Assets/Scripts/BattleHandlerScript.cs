@@ -94,12 +94,12 @@ public class BattleHandlerScript : MonoBehaviour
             {
                 BottomMenu.SetActive(true);
             }
-            yield return StartCoroutine(attackQueue[i].MoveToBattle());
+            yield return StartCoroutine(AttackingEntityScript.MoveToBattle());
 
             //Attackerar för dumma botar
-            if (!attackQueue[i].isPlayerControlled)
+            if (!AttackingEntityScript.isPlayerControlled)
             {
-                attackQueue[i].AiChooseMove(playerEntitiesAlive, enemyEntitiesAlive, AttackingEntityScript);  
+                AttackingEntityScript.AiChooseMove(playerEntitiesAlive, enemyEntitiesAlive, AttackingEntityScript);  
             }
 
             //väntar på input från dumma spelaren
@@ -109,7 +109,10 @@ public class BattleHandlerScript : MonoBehaviour
 
             }
             
-            yield return StartCoroutine(attackQueue[i].MoveFromBattle());
+            yield return StartCoroutine(AttackingEntityScript.MoveFromBattle());
+
+            if(AttackingEntityScript.isPlayerControlled)
+                AttackingEntityScript.energySystem.IncreaseEnergy(AttackingEntityScript.currentAction.energyGenerated);
 
             BottomMenu.SetActive(false);
             ActionMenu.SetActive(false);
