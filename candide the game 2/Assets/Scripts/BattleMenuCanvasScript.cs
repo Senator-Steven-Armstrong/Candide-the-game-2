@@ -108,7 +108,15 @@ public class BattleMenuCanvasScript : MonoBehaviour
         if(currentAction.selectedEntites.Count >= currentAction.numOfEntitesToSelect)
         {
             // stoppa slection och kör action
-            currentAction.Action(currentAction.selectedEntites, battleHandlerScript.AttackingEntityScript);
+            if (!currentAction.willChooseTargets)
+            {
+                currentAction.Action(currentAction.selectedEntites, battleHandlerScript.AttackingEntityScript);
+            }
+            else
+            {
+                MakeEntitiesSelectable(currentAction.possibleEntitiesToSelect);
+            }
+            
 
             //förstör pilarna
             for (int i = 0; i < currentAction.possibleEntitiesToSelect.Count; i++)
@@ -185,7 +193,7 @@ public class BattleMenuCanvasScript : MonoBehaviour
 
             // Länkar ihop knappen och attacken mycket mycket viktig
             actions[i2].buttonScript = AttackUI.GetComponent<ActionButtonScript>();
-            actions[i2].buttonScript.SetVariables(actions[i2].stringName, actions[i2].stringAttackDamage, actions[i2].stringDebateDamage, actions[i2].stringDescription);
+            actions[i2].buttonScript.SetVariables(actions[i2].stringName, actions[i2].stringAttackDamage, actions[i2].stringDebateDamage, actions[i2].stringDescription, actions[i2].energyCost, actions[i2].energyGenerated);
 
             UnityAction checkAction = () => CheckEnergyOnClick(() => actions[i2].ChooseEntities(battleHandlerScript.enemyEntitiesAlive, battleHandlerScript.playerEntitiesAlive, battleHandlerScript.AttackingEntityScript), buttonScript);
             UnityAction checkWaitingForInput = () => CheckEnergyOnClick(() => StopWaitingForInputVariable(), buttonScript);

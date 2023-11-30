@@ -7,11 +7,14 @@ public class EnergySystem : MonoBehaviour
     public int maxEnergy;
     public int currentEnergy;
 
+    public List<GameObject> energyDots;
+
     // Start is called before the first frame update
     void Start()
     {
         maxEnergy = 3;
-        currentEnergy = 0;   
+        currentEnergy = 0;
+        SetEnergyDots();
     }
 
     public void DecreaseEnergy(int amount)
@@ -24,6 +27,9 @@ public class EnergySystem : MonoBehaviour
         {
             currentEnergy -= amount;
         }
+
+        SetEnergyDots();
+
     }
 
     public void IncreaseEnergy(int amount)
@@ -35,6 +41,25 @@ public class EnergySystem : MonoBehaviour
         else
         {
             currentEnergy += amount;
+        }
+
+        SetEnergyDots();
+
+    }
+
+    private void SetEnergyDots()
+    {
+        for (int i = 0; i < energyDots.Count; i++)
+        {
+            energyDots[i].gameObject.SetActive(false);
+        }
+
+        if(currentEnergy > 0)
+        {
+            for (int i = 0; i < currentEnergy; i++)
+            {
+                energyDots[i].SetActive(true);
+            }
         }
     }
 }

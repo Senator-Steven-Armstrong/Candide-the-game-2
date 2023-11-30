@@ -8,12 +8,6 @@ public class BarValueScript : MonoBehaviour
 
     private float prop;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetBarValue(float max, float curr)
     {
         prop = curr / max;
