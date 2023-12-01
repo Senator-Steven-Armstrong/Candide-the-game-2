@@ -202,8 +202,10 @@ public class BattleMenuCanvasScript : MonoBehaviour
             UnityAction bruh = () => SetCurrentAction(buttonScript);
 
             // fixar button press för attacken
-            button.onClick.AddListener(checkButtonDisable);
+            
             button.onClick.AddListener(bruh);
+
+
 
             if (!actions[i2].willChooseTargets)
             {
@@ -212,9 +214,10 @@ public class BattleMenuCanvasScript : MonoBehaviour
             }
             else
             {
-                UnityAction checkEntitiesSelectable = () => CheckEnergyOnClick(() => MakeEntitiesSelectable(buttonScript.action.possibleEntitiesToSelect), buttonScript);
-                button.onClick.AddListener(checkEntitiesSelectable);
+                button.onClick.AddListener(() => CheckEnergyOnClick(() => MakeEntitiesSelectable(buttonScript.action.possibleEntitiesToSelect), buttonScript));
             }
+
+            button.onClick.AddListener(checkButtonDisable);
         }
     }
 
@@ -222,13 +225,15 @@ public class BattleMenuCanvasScript : MonoBehaviour
     {
         battleHandlerScript.AttackingEntityScript.currentAction = script.action;
         currentAction = script.action;
-     
+        Debug.Log(battleHandlerScript.AttackingEntityScript.stringName + " : " + currentAction);
     }
 
     public void CheckEnergyOnClick(UnityAction function, ActionButtonScript script)
     {
+        Debug.Log("hit1");
         if (script.action.CheckEnergy(battleHandlerScript.AttackingEntityScript))
         {
+            Debug.Log("hit2");
             function.Invoke();
         }
     }

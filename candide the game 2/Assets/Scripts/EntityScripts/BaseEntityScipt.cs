@@ -60,7 +60,6 @@ public abstract class BaseEntityScipt : MonoBehaviour
         currentMoveState = MoveStates.MOVETOBATTLE;
         if (isPlayerControlled)
         {
-            Debug.Log(cameraBehaviourScript);
             StartCoroutine(cameraBehaviourScript.MoveToBattlePos(moveTime));
         }
 

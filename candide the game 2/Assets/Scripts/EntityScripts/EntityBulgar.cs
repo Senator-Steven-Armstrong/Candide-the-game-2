@@ -11,12 +11,18 @@ public class EntityBulgar : BaseEntityScipt
         {
             //ATTACK
             int index = Random.Range(0, currentEntity.attackScripts.Count);
+            currentAction = currentEntity.attackScripts[Random.Range(0, currentEntity.attackScripts.Count)];
+            currentAction.SetVariables(enemies, friends);
+            energySystem.DecreaseEnergy(currentAction.energyCost);
             currentEntity.attackScripts[index].ChooseEntities(enemies, friends, currentEntity);
         }
         else
         {
             //DEBATE
             int index = Random.Range(0, currentEntity.debateScripts.Count);
+            currentAction = currentEntity.attackScripts[Random.Range(0, currentEntity.debateScripts.Count)];
+            currentAction.SetVariables(enemies, friends);
+            energySystem.DecreaseEnergy(currentAction.energyCost);
             currentEntity.debateScripts[index].ChooseEntities(enemies, friends, currentEntity);
         }
 

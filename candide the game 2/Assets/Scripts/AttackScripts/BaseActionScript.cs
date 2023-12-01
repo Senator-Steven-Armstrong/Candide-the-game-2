@@ -59,8 +59,8 @@ public abstract class BaseActionScript
 
     public bool CheckEnergy(BaseEntityScipt entityScript)
     {
-        Debug.Log(entityScript.energySystem.currentEnergy);
-        Debug.Log(energyCost);
+        Debug.Log(entityScript.name);
+        Debug.Log(entityScript.currentAction);
         if(entityScript.energySystem.currentEnergy >= energyCost)
         {
             entityScript.energySystem.DecreaseEnergy(energyCost);

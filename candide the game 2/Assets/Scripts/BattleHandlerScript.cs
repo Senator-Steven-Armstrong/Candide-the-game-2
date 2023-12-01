@@ -84,7 +84,6 @@ public class BattleHandlerScript : MonoBehaviour
     {
         for (int i = 0; i < attackQueue.Count; i++)
         {
-
            
             yield return new WaitForSeconds(1f);
 
@@ -103,7 +102,7 @@ public class BattleHandlerScript : MonoBehaviour
             }
 
             //väntar på input från dumma spelaren
-            else if (attackQueue[i].isPlayerControlled)
+            else
             {
                 yield return StartCoroutine(WaitForInput());
 
@@ -111,8 +110,7 @@ public class BattleHandlerScript : MonoBehaviour
             
             yield return StartCoroutine(AttackingEntityScript.MoveFromBattle());
 
-            if(AttackingEntityScript.isPlayerControlled)
-                AttackingEntityScript.energySystem.IncreaseEnergy(AttackingEntityScript.currentAction.energyGenerated);
+            AttackingEntityScript.energySystem.IncreaseEnergy(AttackingEntityScript.currentAction.energyGenerated);
 
             BottomMenu.SetActive(false);
             ActionMenu.SetActive(false);

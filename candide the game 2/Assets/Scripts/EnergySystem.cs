@@ -13,7 +13,7 @@ public class EnergySystem : MonoBehaviour
     void Start()
     {
         maxEnergy = 3;
-        currentEnergy = 0;
+        currentEnergy = 3;
         SetEnergyDots();
     }
 
