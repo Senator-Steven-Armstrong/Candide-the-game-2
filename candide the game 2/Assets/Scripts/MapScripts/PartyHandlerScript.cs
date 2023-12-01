@@ -6,16 +6,90 @@ public class PartyHandlerScript : MonoBehaviour
 {
 
     public List<GameObject> PartyMembers = new List<GameObject>();
+    public Room currentRoom;
+    private Vector3 _currentPosition;
+    private Vector3 _targetPosition;
+
+    private float _timeElapsed;
+    public float moveTime;
+
+    public MapHandler mapHandler;
+
+    public enum MoveStates
+    {
+        WAIT,
+        MOVING
+    }
+
+    public MoveStates currentState;
 
     // Start is called before the first frame update
     void Start()
     {
-        Instantiate(PartyMembers[0], Vector3.zero, Quaternion.identity);
+        GameObject candide = Instantiate(PartyMembers[0], Vector3.zero, Quaternion.identity);
+        candide.transform.SetParent(transform, false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            if (currentRoom.topAdjacentRoom)
+            {
+                _targetPosition = currentRoom.topAdjacentRoom.movementPosition;
+                currentRoom = currentRoom.topAdjacentRoom;
+                currentState = MoveStates.MOVING;
+            } 
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (currentRoom.bottomAdjacentRoom)
+            {
+                _targetPosition = currentRoom.bottomAdjacentRoom.movementPosition;
+                currentRoom = currentRoom.bottomAdjacentRoom;
+                currentState = MoveStates.MOVING;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            if (currentRoom.leftAdjacentRoom)
+            {
+                _targetPosition = currentRoom.leftAdjacentRoom.movementPosition;
+                currentRoom = currentRoom.leftAdjacentRoom;
+                currentState = MoveStates.MOVING;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            if (currentRoom.rightAdjacentRoom)
+            {
+                _targetPosition = currentRoom.rightAdjacentRoom.movementPosition;
+                currentRoom = currentRoom.rightAdjacentRoom;
+                currentState = MoveStates.MOVING;
+            }
+        }
+
+        switch (currentState)
+        {
+            case MoveStates.WAIT:
+                _timeElapsed = 0;
+                break;
+            case MoveStates.MOVING:
+                _timeElapsed += Time.deltaTime;
+                float percentageComplete = _timeElapsed / moveTime;
+                gameObject.transform.position = Vector3.Lerp(_currentPosition, _targetPosition, percentageComplete);
+
+                if(gameObject.transform.position == _targetPosition)
+                {
+                    _currentPosition = _targetPosition;
+                    currentState = MoveStates.WAIT;
+                }
+                break;
+            default:
+                break;
+        }
+
     }
 }
