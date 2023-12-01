@@ -15,6 +15,8 @@ public class PartyHandlerScript : MonoBehaviour
 
     public MapHandler mapHandler;
 
+    public bool isMoving;
+
     public enum MoveStates
     {
         WAIT,
@@ -34,49 +36,54 @@ public class PartyHandlerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (!isMoving)
         {
-            if (currentRoom.topAdjacentRoom)
+            if (Input.GetKeyDown(KeyCode.W))
             {
-                _targetPosition = currentRoom.topAdjacentRoom.movementPosition;
-                currentRoom = currentRoom.topAdjacentRoom;
-                currentState = MoveStates.MOVING;
-            } 
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (currentRoom.bottomAdjacentRoom)
-            {
-                _targetPosition = currentRoom.bottomAdjacentRoom.movementPosition;
-                currentRoom = currentRoom.bottomAdjacentRoom;
-                currentState = MoveStates.MOVING;
+                if (currentRoom.topAdjacentRoom)
+                {
+                    _targetPosition = currentRoom.topAdjacentRoom.movementPosition;
+                    currentRoom = currentRoom.topAdjacentRoom;
+                    currentState = MoveStates.MOVING;
+                }
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (currentRoom.leftAdjacentRoom)
+            else if (Input.GetKeyDown(KeyCode.S))
             {
-                _targetPosition = currentRoom.leftAdjacentRoom.movementPosition;
-                currentRoom = currentRoom.leftAdjacentRoom;
-                currentState = MoveStates.MOVING;
+                if (currentRoom.bottomAdjacentRoom)
+                {
+                    _targetPosition = currentRoom.bottomAdjacentRoom.movementPosition;
+                    currentRoom = currentRoom.bottomAdjacentRoom;
+                    currentState = MoveStates.MOVING;
+                }
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (currentRoom.rightAdjacentRoom)
+            else if (Input.GetKeyDown(KeyCode.A))
             {
-                _targetPosition = currentRoom.rightAdjacentRoom.movementPosition;
-                currentRoom = currentRoom.rightAdjacentRoom;
-                currentState = MoveStates.MOVING;
+                if (currentRoom.leftAdjacentRoom)
+                {
+                    _targetPosition = currentRoom.leftAdjacentRoom.movementPosition;
+                    currentRoom = currentRoom.leftAdjacentRoom;
+                    currentState = MoveStates.MOVING;
+                }
             }
-        }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                if (currentRoom.rightAdjacentRoom)
+                {
+                    _targetPosition = currentRoom.rightAdjacentRoom.movementPosition;
+                    currentRoom = currentRoom.rightAdjacentRoom;
+                    currentState = MoveStates.MOVING;
+                }
+            }
+        } 
 
         switch (currentState)
         {
             case MoveStates.WAIT:
+                isMoving = false;
                 _timeElapsed = 0;
                 break;
             case MoveStates.MOVING:
+                isMoving = true;
                 _timeElapsed += Time.deltaTime;
                 float percentageComplete = _timeElapsed / moveTime;
                 gameObject.transform.position = Vector3.Lerp(_currentPosition, _targetPosition, percentageComplete);
