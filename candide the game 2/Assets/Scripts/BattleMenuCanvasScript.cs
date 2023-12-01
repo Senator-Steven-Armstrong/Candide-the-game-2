@@ -89,7 +89,7 @@ public class BattleMenuCanvasScript : MonoBehaviour
     {
         
         //När en entity är vald
-        Debug.Log(entity);  
+        Debug.Log(entity.name);  
         if(currentAction.canOnlySelectDifferentTypes)
         {
             if(!currentAction.selectedEntites.Contains(entity))
@@ -105,17 +105,12 @@ public class BattleMenuCanvasScript : MonoBehaviour
         currentAction = battleHandlerScript.AttackingEntityScript.currentAction;
 
         // Om alla entities är valda
+        Debug.Log(currentAction);
         if(currentAction.selectedEntites.Count >= currentAction.numOfEntitesToSelect)
         {
             // stoppa slection och kör action
-            if (!currentAction.willChooseTargets)
-            {
-                currentAction.Action(currentAction.selectedEntites, battleHandlerScript.AttackingEntityScript);
-            }
-            else
-            {
-                MakeEntitiesSelectable(currentAction.possibleEntitiesToSelect);
-            }
+            currentAction.Action(currentAction.selectedEntites, battleHandlerScript.AttackingEntityScript);
+            
             
 
             //förstör pilarna
