@@ -11,7 +11,7 @@ public class MapEntityRepScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _renderer = GetComponent<SpriteRenderer>();
+        _renderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         _renderer.sprite = sprite;
     }
 

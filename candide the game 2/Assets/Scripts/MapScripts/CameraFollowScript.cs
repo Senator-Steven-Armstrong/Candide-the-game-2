@@ -10,7 +10,7 @@ public class CameraFollowScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-         
+         posOffset = transform.position;
     }
 
     // Update is called once per frame
