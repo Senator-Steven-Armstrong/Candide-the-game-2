@@ -586,6 +586,7 @@ MonoBehaviour:
   rightAdjacentRoom: {fileID: 2037337122}
   leftAdjacentRoom: {fileID: 0}
   isSecret: 0
+  isCombatRoom: 0
 --- !u!1 &990808138
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,6 +721,7 @@ MonoBehaviour:
   rightAdjacentRoom: {fileID: 0}
   leftAdjacentRoom: {fileID: 0}
   isSecret: 0
+  isCombatRoom: 0
 --- !u!1 &1179703342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,6 +1282,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rooms: []
   startRoom: {fileID: 0}
+  baseBattleScenePrefab: {fileID: 476204470211599904, guid: fc5b42450cd399f4a8e3fef9dfc3179b, type: 3}
+  baseBattleScene: {fileID: 0}
+  currentBattleScene: {fileID: 0}
+--- !u!1 &1859401082
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1859401083}
+  - component: {fileID: 1859401084}
+  m_Layer: 0
+  m_Name: GameHandler
+  m_TagString: GameHandler
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1859401083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859401082}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.561432, y: 14.164777, z: -13.684589}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1859401084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859401082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4570c9497aa9efd46bc55f2da6265b17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PartyMembers: []
+  enemiesInCombat: []
+  currentMap: {fileID: 0}
+  baseCombatEnviornment: {fileID: 476204470211599904, guid: fc5b42450cd399f4a8e3fef9dfc3179b, type: 3}
+  currentCombatEnviornment: {fileID: 476204470211599904, guid: fc5b42450cd399f4a8e3fef9dfc3179b, type: 3}
 --- !u!1 &2037337120
 GameObject:
   m_ObjectHideFlags: 0
@@ -1321,7 +1375,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2037337120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8e0ef781fd8241b0fb90171a90a3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e8d8b760b7ad2c499216c48678a77f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movementPosition: {x: 0, y: 0, z: 0}
@@ -1330,6 +1384,10 @@ MonoBehaviour:
   rightAdjacentRoom: {fileID: 0}
   leftAdjacentRoom: {fileID: 974975446}
   isSecret: 0
+  isCombatRoom: 1
+  specificBattleScene: {fileID: 0}
+  enemiesToFight:
+  - {fileID: 4104334325559378301, guid: b36fedb8e12e6a546876d849e62159c9, type: 3}
 --- !u!1 &2068760254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,7 +1412,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068760254}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1374,8 +1432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dabeeb5b123b18748950c0e4e689c0cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PartyMembers:
-  - {fileID: 3215753426547758991, guid: c91bb74c0b3717f4b809d878979bf351, type: 3}
+  candidePref: {fileID: 3215753426547758991, guid: c91bb74c0b3717f4b809d878979bf351, type: 3}
   currentRoom: {fileID: 974975446}
   moveTime: 1
   mapHandler: {fileID: 1791778830}

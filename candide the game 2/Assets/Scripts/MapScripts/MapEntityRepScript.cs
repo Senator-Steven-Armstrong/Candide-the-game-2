@@ -7,6 +7,7 @@ public class MapEntityRepScript : MonoBehaviour
     public Sprite sprite;
     public GameObject representedPrefab;
     private SpriteRenderer _renderer;
+    
 
     // Start is called before the first frame update
     void Start()

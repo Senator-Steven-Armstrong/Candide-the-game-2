@@ -88,9 +88,8 @@ public class BattleMenuCanvasScript : MonoBehaviour
     public void CheckSelectedEntity(GameObject entity)
     {
         
-        //När en entity är vald
-        Debug.Log(entity.name);  
-        if(currentAction.canOnlySelectDifferentTypes)
+        //När en entity är vald 
+        if(currentAction.canOnlySelectDifferentTypes && currentAction.numOfEntitesToSelect <= battleHandlerScript.enemyEntitiesAlive.Count)
         {
             if(!currentAction.selectedEntites.Contains(entity))
             {
@@ -105,7 +104,6 @@ public class BattleMenuCanvasScript : MonoBehaviour
         currentAction = battleHandlerScript.AttackingEntityScript.currentAction;
 
         // Om alla entities är valda
-        Debug.Log(currentAction);
         if(currentAction.selectedEntites.Count >= currentAction.numOfEntitesToSelect)
         {
             // stoppa slection och kör action

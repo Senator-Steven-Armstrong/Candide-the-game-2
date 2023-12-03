@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class BattleHandlerScript : MonoBehaviour
 {
+    public GameHandlerScript gameHandler;
     public List<GameObject> playerEntities;
     public List<GameObject> enemyEntities;
     public List<GameObject> playerEntitiesAlive;
@@ -28,8 +29,24 @@ public class BattleHandlerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandlerScript>();
+        List<GameObject> globalPlayers = gameHandler.PartyMembers;
+
+        playerEntities.Clear();
+        for (int i = 0; i < gameHandler.PartyMembers.Count; i++)
+        {
+            playerEntities.Add(gameHandler.PartyMembers[i]);
+        }
+
+        enemyEntities.Clear();
+        for (int i = 0; i < gameHandler.enemiesInCombat.Count; i++)
+        {
+            enemyEntities.Add(gameHandler.enemiesInCombat[i]);
+        }
+
         SpawnEntities();
 
+        Instantiate(gameHandler.currentCombatEnviornment, Vector3.zero, Quaternion.identity);
 
         icannotprocess = false;
         attackQueue = SortEntityByAttackInitiative();

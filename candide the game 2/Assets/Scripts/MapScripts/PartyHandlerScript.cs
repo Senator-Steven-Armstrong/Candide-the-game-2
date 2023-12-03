@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PartyHandlerScript : MonoBehaviour
 {
-
+    public GameHandlerScript gameHandler;
+    public GameObject candidePref;
     public List<GameObject> PartyMembers = new List<GameObject>();
     public Room currentRoom;
     private Vector3 _currentPosition;
@@ -28,9 +29,10 @@ public class PartyHandlerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandlerScript>();
+        AddEntityToParty(candidePref);
         GameObject candide = Instantiate(PartyMembers[0], Vector3.zero, Quaternion.identity);
         candide.transform.SetParent(transform, false);
-
     }
 
     // Update is called once per frame
@@ -90,13 +92,23 @@ public class PartyHandlerScript : MonoBehaviour
 
                 if(gameObject.transform.position == _targetPosition)
                 {
+
+                    StartCoroutine(currentRoom.StartCombat(1));
+
                     _currentPosition = _targetPosition;
                     currentState = MoveStates.WAIT;
+                    
                 }
                 break;
             default:
                 break;
         }
 
+    }
+
+    public void AddEntityToParty(GameObject MapEntity)
+    {
+        PartyMembers.Add(MapEntity);
+        gameHandler.PartyMembers.Add(MapEntity.GetComponent<MapEntityRepScript>().representedPrefab);
     }
 }
