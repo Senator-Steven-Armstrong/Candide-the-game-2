@@ -5,7 +5,9 @@ using UnityEngine;
 public class PartyHandlerScript : MonoBehaviour
 {
     public GameHandlerScript gameHandler;
+    public GameObject mapEntityPref;
     public GameObject candidePref;
+    public GameObject bulgarPref;
     public List<GameObject> PartyMembers = new List<GameObject>();
     public Room currentRoom;
     private Vector3 _currentPosition;
@@ -30,11 +32,15 @@ public class PartyHandlerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentRoom = mapHandler.startRoom;
         canMove = true;
         gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandlerScript>();
         AddEntityToParty(candidePref);
-        GameObject candide = Instantiate(PartyMembers[0], Vector3.zero, Quaternion.identity);
-        candide.transform.SetParent(transform, false);
+        AddEntityToParty(bulgarPref);
+        GameObject mapEntity = Instantiate(mapEntityPref, gameObject.transform.position, Quaternion.identity);
+        mapEntity.transform.SetParent(transform, false);
+        gameObject.transform.position = currentRoom.movementPosition;
+        _currentPosition = gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -94,12 +100,9 @@ public class PartyHandlerScript : MonoBehaviour
 
                 if(gameObject.transform.position == _targetPosition)
                 {
-
                     StartCoroutine(currentRoom.StartCombat(1));
-
                     _currentPosition = _targetPosition;
-                    currentState = MoveStates.WAIT;
-                    
+                    currentState = MoveStates.WAIT;    
                 }
                 break;
             default:
@@ -111,6 +114,6 @@ public class PartyHandlerScript : MonoBehaviour
     public void AddEntityToParty(GameObject MapEntity)
     {
         PartyMembers.Add(MapEntity);
-        gameHandler.PartyMembers.Add(MapEntity.GetComponent<MapEntityRepScript>().representedPrefab);
+        gameHandler.PartyMembers.Add(MapEntity);
     }
 }

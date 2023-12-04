@@ -22,8 +22,6 @@ public class MapHandler : MonoBehaviour
         {
             rooms.Add(gameObject.transform.GetChild(i).GetComponent<Room>());
         }
-
-        startRoom = rooms[0];
     }
 
     // Update is called once per frame
