@@ -1432,11 +1432,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dabeeb5b123b18748950c0e4e689c0cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameHandler: {fileID: 0}
   candidePref: {fileID: 3215753426547758991, guid: c91bb74c0b3717f4b809d878979bf351, type: 3}
+  PartyMembers:
+  - {fileID: 0}
   currentRoom: {fileID: 974975446}
   moveTime: 1
   mapHandler: {fileID: 1791778830}
   isMoving: 0
+  canMove: 1
   currentState: 0
 --- !u!1 &2130025137
 GameObject:

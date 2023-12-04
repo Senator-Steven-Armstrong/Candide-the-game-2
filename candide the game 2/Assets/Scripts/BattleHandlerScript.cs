@@ -29,6 +29,22 @@ public class BattleHandlerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SetEntities();
+
+        SpawnEntities();
+
+        Instantiate(gameHandler.currentCombatEnviornment, Vector3.zero, Quaternion.identity);
+
+        icannotprocess = false;
+        attackQueue = SortEntityByAttackInitiative();
+        ActionMenu.SetActive(false);
+        BottomMenu.SetActive(false);
+        StartCoroutine(FullTurn());
+        
+    }
+
+    private void SetEntities()
+    {
         gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandlerScript>();
         List<GameObject> globalPlayers = gameHandler.PartyMembers;
 
@@ -43,19 +59,7 @@ public class BattleHandlerScript : MonoBehaviour
         {
             enemyEntities.Add(gameHandler.enemiesInCombat[i]);
         }
-
-        SpawnEntities();
-
-        Instantiate(gameHandler.currentCombatEnviornment, Vector3.zero, Quaternion.identity);
-
-        icannotprocess = false;
-        attackQueue = SortEntityByAttackInitiative();
-        ActionMenu.SetActive(false);
-        BottomMenu.SetActive(false);
-        StartCoroutine(FullTurn());
-        
     }
-
     private void SpawnEntities()
     {
         //spawn players
@@ -67,6 +71,8 @@ public class BattleHandlerScript : MonoBehaviour
             BaseEntityScipt script = playerEntity.GetComponent<BaseEntityScipt>();
             script.startPosition = playerStartPositions[i];
             script.battlePosition = playerBattlePos;
+            script.GetComponent<BaseEntityScipt>().isPlayerControlled = true;
+            playerEntity.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = false;
         }
 
         //spawn enemies
@@ -78,6 +84,8 @@ public class BattleHandlerScript : MonoBehaviour
             BaseEntityScipt script = enemyEntity.GetComponent<BaseEntityScipt>();
             script.startPosition = enemyStartPositions[i];
             script.battlePosition = enemyBattlePos;
+            script.GetComponent<BaseEntityScipt>().isPlayerControlled = false;
+            enemyEntity.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = true;
         }
     }
 

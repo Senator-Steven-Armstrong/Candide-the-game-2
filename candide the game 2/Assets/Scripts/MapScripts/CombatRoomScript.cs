@@ -10,6 +10,9 @@ public class CombatRoomScript : Room
 
     public override IEnumerator StartCombat(float waitSeconds)
     {
+        PartyHandlerScript partyHandler = GameObject.Find("PartyHandler").GetComponent<PartyHandlerScript>();
+        partyHandler.canMove = false;
+
         GameHandlerScript gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandlerScript>();
         if (specificBattleScene != null)
         {

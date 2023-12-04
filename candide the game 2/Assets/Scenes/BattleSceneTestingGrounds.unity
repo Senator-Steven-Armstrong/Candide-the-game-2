@@ -1318,6 +1318,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1286330598}
   m_CullTransparentMesh: 1
+--- !u!1 &1394880855
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1394880857}
+  - component: {fileID: 1394880856}
+  m_Layer: 0
+  m_Name: GameHandler
+  m_TagString: GameHandler
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1394880856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394880855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4570c9497aa9efd46bc55f2da6265b17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PartyMembers:
+  - {fileID: 7094274055752672764, guid: 9918013793998e047bc33bc6d144fd15, type: 3}
+  - {fileID: 4104334325559378301, guid: b36fedb8e12e6a546876d849e62159c9, type: 3}
+  enemiesInCombat:
+  - {fileID: 4104334325559378301, guid: b36fedb8e12e6a546876d849e62159c9, type: 3}
+  currentMap: {fileID: 0}
+  baseCombatEnviornment: {fileID: 476204470211599904, guid: fc5b42450cd399f4a8e3fef9dfc3179b, type: 3}
+  currentCombatEnviornment: {fileID: 476204470211599904, guid: fc5b42450cd399f4a8e3fef9dfc3179b, type: 3}
+--- !u!4 &1394880857
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394880855}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.561432, y: 14.164777, z: -13.684589}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1458092069
 GameObject:
   m_ObjectHideFlags: 0
@@ -2072,11 +2124,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f32a1b263ac43448ab8146e6c5ab277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameHandler: {fileID: 0}
   playerEntities:
   - {fileID: 7094274055752672764, guid: 9918013793998e047bc33bc6d144fd15, type: 3}
-  - {fileID: 7094274055752672764, guid: 9918013793998e047bc33bc6d144fd15, type: 3}
-  enemyEntities:
   - {fileID: 4104334325559378301, guid: b36fedb8e12e6a546876d849e62159c9, type: 3}
+  enemyEntities:
   - {fileID: 4104334325559378301, guid: b36fedb8e12e6a546876d849e62159c9, type: 3}
   playerEntitiesAlive: []
   enemyEntitiesAlive: []

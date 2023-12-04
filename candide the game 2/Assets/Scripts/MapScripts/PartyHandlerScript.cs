@@ -17,6 +17,7 @@ public class PartyHandlerScript : MonoBehaviour
     public MapHandler mapHandler;
 
     public bool isMoving;
+    public bool canMove = true;
 
     public enum MoveStates
     {
@@ -29,6 +30,7 @@ public class PartyHandlerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canMove = true;
         gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandlerScript>();
         AddEntityToParty(candidePref);
         GameObject candide = Instantiate(PartyMembers[0], Vector3.zero, Quaternion.identity);
@@ -38,7 +40,7 @@ public class PartyHandlerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isMoving)
+        if (!isMoving && canMove)
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
