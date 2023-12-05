@@ -14,8 +14,9 @@ public class EntityCandide : BaseEntityScipt
     {
         SetVariables();
 
-        attackScripts.Add(new AttackBasic());
-        attackScripts.Add(new AttackAimedBasic());
+        attackScripts.Add(new _AttackFlail());
+        attackScripts.Add(new _AttackStruggle());
+        attackScripts.Add(new _AttackFinisher());
         debateScripts.Add(new DebateBasic());
     }
 

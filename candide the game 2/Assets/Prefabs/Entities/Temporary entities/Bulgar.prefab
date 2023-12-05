@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 10
+  maxHealth: 25
   healthBar: {fileID: 1263612749895120056}
 --- !u!114 &7858091081896541657
 MonoBehaviour:
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMorality: 0
-  maxMorality: 10
+  maxMorality: 15
   moralityBar: {fileID: 6702576198163238442}
 --- !u!114 &8385927715816844701
 MonoBehaviour:
