@@ -14,7 +14,11 @@ public class HealthSystem : MonoBehaviour
     {
         currentHealth = maxHealth;
         if (healthBar != null)
+        {
             healthBar.SetBarValue(maxHealth, currentHealth);
+            healthBar.SetText(currentHealth, maxHealth);
+        }
+            
     }
     public void DealDamage(float damage)
     {

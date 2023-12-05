@@ -13,8 +13,12 @@ public class MoralitySystem : MonoBehaviour
     private void Start()
     {
         currentMorality = maxMorality;
-        if(moralityBar != null )
+        if(moralityBar != null)
+        {
             moralityBar.SetBarValue(maxMorality, currentMorality);
+            moralityBar.SetText(currentMorality, maxMorality);
+        }
+            
     }
 
     public void DealDamage(float damage)
