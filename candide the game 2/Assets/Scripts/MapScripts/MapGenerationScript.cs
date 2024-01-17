@@ -14,6 +14,7 @@ public class MapGenerationScript : MonoBehaviour
 
     //Direction is a value from 1-4, 1 being north and 4 being west, its a clockwise compass
     private int _direction;
+    private int _forwardDirection;
     private List<int> _possibleDirections = new List<int>();
     [SerializeField] private int roomsUntilTurn;
     [SerializeField] private int roomsUntilCombat;
@@ -30,10 +31,7 @@ public class MapGenerationScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            _possibleDirections.Add(i+1);
-        }
+        ResetDirections();
     }
 
     // Update is called once per frame
@@ -60,8 +58,6 @@ public class MapGenerationScript : MonoBehaviour
         SpawnRoom(BasicRoom, Vector3.zero);
         partyHandler.currentRoom = currentRoom.GetComponent<Room>();
 
-        Debug.Log(_numOfCurrentBasicRooms);
-        Debug.Log(_numOfPossibleBasicRooms);
         if (_numOfCurrentBasicRooms < _numOfPossibleBasicRooms)
         {
             GenerateNextRoom();
@@ -73,7 +69,32 @@ public class MapGenerationScript : MonoBehaviour
         _numOfCurrentBasicRooms = 0;
         _numOfCurrentCombatRooms = 0;
 
+        ResetDirections();
         SetRandomDirection();
+        _forwardDirection = _direction;
+        switch (_direction)
+        {
+            case 1:
+                _possibleDirections.Remove(3);
+                break;
+            case 2:
+                _possibleDirections.Remove(4);
+                break;
+            case 3:
+                _possibleDirections.Remove(1);
+                break;
+            case 4:
+                _possibleDirections.Remove(2);
+                break;
+            default:
+                break;
+        }
+        _possibleDirections.Remove(_forwardDirection);
+        string directionsDebug = "";
+        foreach (var direction in _possibleDirections)
+        {
+            directionsDebug += direction.ToString() + ", "; 
+        }
 
         _numOfPossibleBasicRooms = Mathf.RoundToInt(Random.Range(numOfBasicRoomsRange.x, numOfBasicRoomsRange.y));
         _numOfPossibleCombatRooms = Mathf.RoundToInt(Random.Range(numOfCombatRoomsRange.x, numOfCombatRoomsRange.y));
@@ -89,6 +110,28 @@ public class MapGenerationScript : MonoBehaviour
     private void SetRandomDirection()
     {
         _direction = _possibleDirections[Random.Range(0, _possibleDirections.Count)];
+    }
+
+    private void ResetDirections()
+    {
+        _possibleDirections.Clear();
+        for (int i = 0; i < 4; i++)
+        {
+            _possibleDirections.Add(i + 1);
+        }
+    }
+
+    private void ChangeDirection()
+    {
+        int chosenDirection = _possibleDirections[Random.Range(1, _possibleDirections.Count - 1)];
+        if(chosenDirection == _forwardDirection)
+        {
+            // get two directions
+        }
+        else
+        {
+            // get one direction fixa kod goofy ass kod
+        }
     }
 
     private void GenerateNextRoom()
