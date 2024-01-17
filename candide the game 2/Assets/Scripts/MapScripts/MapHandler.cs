@@ -6,7 +6,6 @@ using UnityEngine;
 public class MapHandler : MonoBehaviour
 {
     public List<Room> rooms;
-    public Room startRoom;
 
     public GameObject baseBattleScenePrefab;
     public GameObject baseBattleScene;

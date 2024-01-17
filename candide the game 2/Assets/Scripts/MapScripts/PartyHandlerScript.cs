@@ -16,8 +16,6 @@ public class PartyHandlerScript : MonoBehaviour
     private float _timeElapsed;
     public float moveTime;
 
-    public MapHandler mapHandler;
-
     public bool isMoving;
     public bool canMove = true;
 
@@ -32,7 +30,6 @@ public class PartyHandlerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentRoom = mapHandler.startRoom;
         canMove = true;
         gameHandler = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandlerScript>();
         AddEntityToParty(candidePref);

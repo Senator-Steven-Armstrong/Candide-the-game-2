@@ -123,6 +123,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &209181734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 209181736}
+  - component: {fileID: 209181735}
+  m_Layer: 0
+  m_Name: grid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!156049354 &209181735
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209181734}
+  m_Enabled: 1
+  m_CellSize: {x: 5, y: 1, z: 5}
+  m_CellGap: {x: 10, y: 0, z: 10}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
+--- !u!4 &209181736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209181734}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +447,7 @@ GameObject:
   - component: {fileID: 1946595681}
   - component: {fileID: 1946595682}
   m_Layer: 0
-  m_Name: MapHandler
+  m_Name: MapGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -417,7 +461,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1946595680}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.5521035, y: 14.29356, z: -13.600444}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -436,8 +480,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c91802854f5e943bfd8e1707e2b98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numOfBasicRoomsRange: {x: 5, y: 5}
+  _numOfPossibleBasicRooms: 0
   numOfCombatRoomsRange: {x: 4, y: 7}
-  _numOfCombatRooms: 0
+  _numOfPossibleCombatRooms: 0
+  roomsUntilTurn: 0
+  roomsUntilCombat: 0
+  partyHandler: {fileID: 2068760256}
   BasicRoom: {fileID: 8288765729895447579, guid: 2c40fa3ef5c3a4e4aa7a98beb1395ac8, type: 3}
   CombatRoom: {fileID: 0}
 --- !u!1 &2068760254
@@ -456,7 +505,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2068760255
 Transform:
   m_ObjectHideFlags: 0
@@ -491,7 +540,6 @@ MonoBehaviour:
   PartyMembers: []
   currentRoom: {fileID: 0}
   moveTime: 1
-  mapHandler: {fileID: 0}
   isMoving: 0
   canMove: 1
   currentState: 0
