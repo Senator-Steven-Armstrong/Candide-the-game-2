@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - GameHandler
+  - Room
   layers:
   - Default
   - TransparentFX

@@ -554,7 +554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c91802854f5e943bfd8e1707e2b98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numOfBasicRoomsRange: {x: 3, y: 8}
+  numOfBasicRoomsRange: {x: 22, y: 35}
   _numOfPossibleBasicRooms: 0
   numOfCombatRoomsRange: {x: 4, y: 7}
   _numOfPossibleCombatRooms: 0

@@ -14,7 +14,6 @@ public class MapGenerationScript : MonoBehaviour
 
     //Direction is a value from 1-4, 1 being north and 4 being west, its a clockwise compass
     private int _direction;
-    private int _forwardDirection;
     private List<int> _possibleDirections = new List<int>();
     [SerializeField] private int roomsUntilTurn;
     [SerializeField] private int roomsUntilCombat;
@@ -25,7 +24,6 @@ public class MapGenerationScript : MonoBehaviour
     [Header("Room Prefabs")]
     public GameObject BasicRoom;
     public GameObject CombatRoom;
-
 
 
     // Start is called before the first frame update
@@ -60,7 +58,7 @@ public class MapGenerationScript : MonoBehaviour
 
         if (_numOfCurrentBasicRooms < _numOfPossibleBasicRooms)
         {
-            GenerateNextRoom();
+            StartCoroutine(GenerateNextRoom());
         }
     }
 
@@ -70,31 +68,7 @@ public class MapGenerationScript : MonoBehaviour
         _numOfCurrentCombatRooms = 0;
 
         ResetDirections();
-        SetRandomDirection();
-        _forwardDirection = _direction;
-        switch (_direction)
-        {
-            case 1:
-                _possibleDirections.Remove(3);
-                break;
-            case 2:
-                _possibleDirections.Remove(4);
-                break;
-            case 3:
-                _possibleDirections.Remove(1);
-                break;
-            case 4:
-                _possibleDirections.Remove(2);
-                break;
-            default:
-                break;
-        }
-        _possibleDirections.Remove(_forwardDirection);
-        string directionsDebug = "";
-        foreach (var direction in _possibleDirections)
-        {
-            directionsDebug += direction.ToString() + ", "; 
-        }
+        _direction = Random.Range(1, 4);
 
         _numOfPossibleBasicRooms = Mathf.RoundToInt(Random.Range(numOfBasicRoomsRange.x, numOfBasicRoomsRange.y));
         _numOfPossibleCombatRooms = Mathf.RoundToInt(Random.Range(numOfCombatRoomsRange.x, numOfCombatRoomsRange.y));
@@ -103,56 +77,108 @@ public class MapGenerationScript : MonoBehaviour
             _numOfPossibleBasicRooms = 1;
         }
 
-        roomsUntilTurn = Random.Range(2, 2);
+        roomsUntilTurn = Random.Range(2, 4);
 
-    }
-
-    private void SetRandomDirection()
-    {
-        _direction = _possibleDirections[Random.Range(0, _possibleDirections.Count)];
     }
 
     private void ResetDirections()
     {
-        _possibleDirections.Clear();
+        if(_possibleDirections.Count > 0)
+        {
+            _possibleDirections.Clear();
+        }
+        
         for (int i = 0; i < 4; i++)
         {
             _possibleDirections.Add(i + 1);
         }
     }
 
-    private void ChangeDirection()
+    private int ChangeDirection()
     {
-        int chosenDirection = _possibleDirections[Random.Range(1, _possibleDirections.Count - 1)];
-        if(chosenDirection == _forwardDirection)
+        RaycastHit hit;
+
+        ResetDirections();
+        _possibleDirections.Sort();
+        _possibleDirections.Remove(_direction);
+        _possibleDirections.Remove(GetReversedDirection());
+        
+        
+        int chosenDirection = _possibleDirections[Random.Range(0, _possibleDirections.Count)];
+        _possibleDirections.Remove(chosenDirection); 
+
+        Vector3 rayDirection = currentRoom.gameObject.transform.position;
+        rayDirection = GetPositionOfNextRoom(chosenDirection, rayDirection);
+
+
+        if (Physics.Raycast(currentRoom.transform.position, rayDirection, out hit, 100000))
         {
-            // get two directions
+            Debug.Log("Detected rooms in sight");
+
+            //eftersom vi bara har 4 möjliga riktningar och 3 är borttagna återstår bara en
+            chosenDirection = _possibleDirections[0];
+            rayDirection = currentRoom.gameObject.transform.position;
+            rayDirection = GetPositionOfNextRoom(chosenDirection, rayDirection);
+
+            if (Physics.Raycast(currentRoom.transform.position, rayDirection, out hit, 100000))
+            {
+                Debug.Log("Did it again");
+                roomsUntilTurn = 1;
+                Debug.Log(_direction);
+                Time.timeScale = 0;
+                return _direction;
+            }
+            else
+            {
+                roomsUntilTurn = Random.Range(1, 2);
+                return chosenDirection;
+            }
         }
         else
         {
-            // get one direction fixa kod goofy ass kod
+            roomsUntilTurn = Random.Range(1, 2);
+            return chosenDirection;
         }
+        
     }
 
-    private void GenerateNextRoom()
+    private int GetReversedDirection()
     {
+        switch (_direction)
+        {
+            case 1:
+                return 3;
+            case 2:
+                return 4;
+            case 3:
+                return 1;
+            case 4:
+                return 2;
+        }
+        return 1;
+    }
+
+    private IEnumerator  GenerateNextRoom()
+    {
+        yield return new WaitForSeconds(0.4f);
         Vector3 nextRoomPosition = currentRoom.transform.position;
         // Sets the position of the next tile
-        if (_direction % 2 == 0)
+        nextRoomPosition = GetPositionOfNextRoom(_direction, nextRoomPosition);
+
+        
+        
+        if(roomsUntilTurn <= 0)
         {
-            nextRoomPosition.x += GetDirectionPosValue(_direction);
-        }
-        else
-        {
-            nextRoomPosition.z += GetDirectionPosValue(_direction);
+            _direction = ChangeDirection();
         }
 
         // Instantiates Room
         SpawnRoom(BasicRoom, nextRoomPosition);
+        roomsUntilTurn--;
 
-        if(_numOfCurrentBasicRooms < _numOfPossibleBasicRooms)
+        if (_numOfCurrentBasicRooms < _numOfPossibleBasicRooms)
         {
-            GenerateNextRoom();
+            StartCoroutine(GenerateNextRoom());
         }
     }
 
@@ -202,6 +228,19 @@ public class MapGenerationScript : MonoBehaviour
         {
             return 10;
         }
+    }
+
+    private Vector3 GetPositionOfNextRoom(int direction, Vector3 position) 
+    {
+        if (_direction % 2 == 0)
+        {
+            position.x += GetDirectionPosValue(_direction);
+        }
+        else
+        {
+            position.z += GetDirectionPosValue(_direction);
+        }
+        return position;
     }
 
 }
