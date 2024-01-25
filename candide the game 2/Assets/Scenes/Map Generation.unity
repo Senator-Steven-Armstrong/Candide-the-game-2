@@ -563,6 +563,7 @@ MonoBehaviour:
   partyHandler: {fileID: 2068760256}
   BasicRoom: {fileID: 8288765729895447579, guid: 2c40fa3ef5c3a4e4aa7a98beb1395ac8, type: 3}
   CombatRoom: {fileID: 0}
+  waittime: 0.1
 --- !u!1 &2068760254
 GameObject:
   m_ObjectHideFlags: 0

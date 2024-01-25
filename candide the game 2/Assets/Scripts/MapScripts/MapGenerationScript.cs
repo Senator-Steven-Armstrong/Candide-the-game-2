@@ -11,6 +11,9 @@ public class MapGenerationScript : MonoBehaviour
     [SerializeField]private Vector2 numOfCombatRoomsRange;
     [SerializeField]private int _numOfPossibleCombatRooms;
     private int _numOfCurrentCombatRooms;
+    [SerializeField] private Vector2 numOfBranchesRange;
+    [SerializeField] private int _numOfPossibleBranches;
+    private int _numOfCurrentBranches;
 
     //Direction is a value from 1-4, 1 being north and 4 being west, its a clockwise compass
     private int _direction;
@@ -25,6 +28,19 @@ public class MapGenerationScript : MonoBehaviour
     public GameObject BasicRoom;
     public GameObject CombatRoom;
 
+    [SerializeField] public float waittime;
+
+    private enum generationEvents
+    {
+        NORMAL,
+        COMBAT,
+        SHOP,
+        SPLIT,
+        LOOP,
+        BOSS
+    }
+
+    [SerializeField] private generationEvents _currentGenerationEvent;
 
     // Start is called before the first frame update
     void Start()
@@ -81,6 +97,12 @@ public class MapGenerationScript : MonoBehaviour
 
     }
 
+    private void SetEventList()
+    {
+        int eventCount = (int)_numOfCurrentBasicRooms / 2;
+
+    }
+
     private void ResetDirections()
     {
         if(_possibleDirections.Count > 0)
@@ -92,6 +114,7 @@ public class MapGenerationScript : MonoBehaviour
         {
             _possibleDirections.Add(i + 1);
         }
+        _possibleDirections.Sort();
     }
 
     private int ChangeDirection()
@@ -107,36 +130,37 @@ public class MapGenerationScript : MonoBehaviour
         int chosenDirection = _possibleDirections[Random.Range(0, _possibleDirections.Count)];
         _possibleDirections.Remove(chosenDirection); 
 
-        Vector3 rayDirection = currentRoom.gameObject.transform.position;
-        rayDirection = GetPositionOfNextRoom(chosenDirection, rayDirection);
+        Vector3 rayDirection;
+        rayDirection = GetPositionOfNextRoom(chosenDirection, Vector3.zero);
 
 
-        if (Physics.Raycast(currentRoom.transform.position, rayDirection, out hit, 100000))
+        if (Physics.Raycast(currentRoom.transform.position, rayDirection.normalized, out hit, 10000))
         {
-            Debug.Log("Detected rooms in sight");
+            Debug.Log(hit.distance + " : Hit " + hit.collider.gameObject.name);
 
             //eftersom vi bara har 4 möjliga riktningar och 3 är borttagna återstår bara en
             chosenDirection = _possibleDirections[0];
-            rayDirection = currentRoom.gameObject.transform.position;
-            rayDirection = GetPositionOfNextRoom(chosenDirection, rayDirection);
+            rayDirection = GetPositionOfNextRoom(chosenDirection, Vector3.zero);
 
-            if (Physics.Raycast(currentRoom.transform.position, rayDirection, out hit, 100000))
+            
+            if (Physics.Raycast(currentRoom.transform.position, rayDirection.normalized, out hit, 10000))
             {
                 Debug.Log("Did it again");
+                Debug.Log(hit.distance + " : Hit " + hit.collider.gameObject.name);
                 roomsUntilTurn = 1;
-                Debug.Log(_direction);
-                Time.timeScale = 0;
+                Debug.Log("DIRECTION: " + _direction);
                 return _direction;
             }
             else
             {
-                roomsUntilTurn = Random.Range(1, 2);
+                roomsUntilTurn = Random.Range(1, 3);
                 return chosenDirection;
             }
         }
         else
         {
-            roomsUntilTurn = Random.Range(1, 2);
+            Debug.Log("Hit nothing");
+            roomsUntilTurn = Random.Range(1, 3);
             return chosenDirection;
         }
         
@@ -160,17 +184,18 @@ public class MapGenerationScript : MonoBehaviour
 
     private IEnumerator  GenerateNextRoom()
     {
-        yield return new WaitForSeconds(0.4f);
-        Vector3 nextRoomPosition = currentRoom.transform.position;
-        // Sets the position of the next tile
-        nextRoomPosition = GetPositionOfNextRoom(_direction, nextRoomPosition);
+        
+        yield return new WaitForSeconds(waittime/1.5f);
 
-        
-        
-        if(roomsUntilTurn <= 0)
+        if (roomsUntilTurn <= 0)
         {
             _direction = ChangeDirection();
         }
+        yield return new WaitForSeconds(waittime/1.5f);
+
+        Vector3 nextRoomPosition = currentRoom.transform.position;
+        // Sets the position of the next tile
+        nextRoomPosition = GetPositionOfNextRoom(_direction, nextRoomPosition);
 
         // Instantiates Room
         SpawnRoom(BasicRoom, nextRoomPosition);
@@ -232,13 +257,13 @@ public class MapGenerationScript : MonoBehaviour
 
     private Vector3 GetPositionOfNextRoom(int direction, Vector3 position) 
     {
-        if (_direction % 2 == 0)
+        if (direction % 2 == 0)
         {
-            position.x += GetDirectionPosValue(_direction);
+            position.x += GetDirectionPosValue(direction);
         }
         else
         {
-            position.z += GetDirectionPosValue(_direction);
+            position.z += GetDirectionPosValue(direction);
         }
         return position;
     }
