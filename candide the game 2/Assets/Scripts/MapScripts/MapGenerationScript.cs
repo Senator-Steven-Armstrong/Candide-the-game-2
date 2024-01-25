@@ -6,20 +6,23 @@ public class MapGenerationScript : MonoBehaviour
 {
     [Header("Generation settings")]
     [SerializeField] private Vector2 numOfBasicRoomsRange;
-    [SerializeField] private int _numOfPossibleBasicRooms;
+    [SerializeField] public int _numOfPossibleBasicRooms;
     private int _numOfCurrentBasicRooms;
     [SerializeField]private Vector2 numOfCombatRoomsRange;
-    [SerializeField]private int _numOfPossibleCombatRooms;
+    [SerializeField]public int _numOfPossibleCombatRooms;
     private int _numOfCurrentCombatRooms;
     [SerializeField] private Vector2 numOfBranchesRange;
-    [SerializeField] private int _numOfPossibleBranches;
+    [SerializeField] public int _numOfPossibleBranches;
     private int _numOfCurrentBranches;
+
+    public bool isMainRoute = true;
 
     //Direction is a value from 1-4, 1 being north and 4 being west, its a clockwise compass
     private int _direction;
     private List<int> _possibleDirections = new List<int>();
     [SerializeField] private int roomsUntilTurn;
     [SerializeField] private int roomsUntilCombat;
+    [SerializeField] private int roomsUntilBranch;
 
     private GameObject currentRoom;
     public PartyHandlerScript partyHandler;
@@ -27,6 +30,11 @@ public class MapGenerationScript : MonoBehaviour
     [Header("Room Prefabs")]
     public GameObject BasicRoom;
     public GameObject CombatRoom;
+
+    public GameObject GeneratorPrefab;
+
+    [Header("Miscellanious")]
+    public Vector3 firstRoomSpawn = Vector3.zero;
 
     [SerializeField] public float waittime;
 
@@ -45,7 +53,11 @@ public class MapGenerationScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ResetDirections();
+        if (!isMainRoute)
+        {
+            SetGenerationValues();
+            StartGeneration();
+        }
     }
 
     // Update is called once per frame
@@ -69,8 +81,12 @@ public class MapGenerationScript : MonoBehaviour
 
     void StartGeneration()
     {
-        SpawnRoom(BasicRoom, Vector3.zero);
-        partyHandler.currentRoom = currentRoom.GetComponent<Room>();
+        SpawnRoom(BasicRoom, firstRoomSpawn);
+        if(isMainRoute)
+        {
+            //Sätter startrummet som currentroom så man spawnar på rätt rum
+            partyHandler.currentRoom = currentRoom.GetComponent<Room>();
+        }
 
         if (_numOfCurrentBasicRooms < _numOfPossibleBasicRooms)
         {
@@ -83,17 +99,26 @@ public class MapGenerationScript : MonoBehaviour
         _numOfCurrentBasicRooms = 0;
         _numOfCurrentCombatRooms = 0;
 
-        ResetDirections();
+        
+
+        if (isMainRoute)
+        {
+            ResetDirections();
+            _numOfPossibleBasicRooms = Mathf.RoundToInt(Random.Range(numOfBasicRoomsRange.x, numOfBasicRoomsRange.y));
+            _numOfPossibleCombatRooms = Mathf.RoundToInt(Random.Range(numOfCombatRoomsRange.x, numOfCombatRoomsRange.y));
+            _numOfPossibleBranches = Mathf.RoundToInt(Random.Range(numOfBranchesRange.x, numOfBranchesRange.y));
+        }
+
         _direction = Random.Range(1, 4);
 
-        _numOfPossibleBasicRooms = Mathf.RoundToInt(Random.Range(numOfBasicRoomsRange.x, numOfBasicRoomsRange.y));
-        _numOfPossibleCombatRooms = Mathf.RoundToInt(Random.Range(numOfCombatRoomsRange.x, numOfCombatRoomsRange.y));
+
         if(numOfBasicRoomsRange.x < 1)
         {
             _numOfPossibleBasicRooms = 1;
         }
 
         roomsUntilTurn = Random.Range(2, 4);
+        roomsUntilBranch = (int)_numOfPossibleBasicRooms/3;
 
     }
 
@@ -184,7 +209,6 @@ public class MapGenerationScript : MonoBehaviour
 
     private IEnumerator  GenerateNextRoom()
     {
-        
         yield return new WaitForSeconds(waittime/1.5f);
 
         if (roomsUntilTurn <= 0)
@@ -200,6 +224,22 @@ public class MapGenerationScript : MonoBehaviour
         // Instantiates Room
         SpawnRoom(BasicRoom, nextRoomPosition);
         roomsUntilTurn--;
+        roomsUntilBranch--;
+
+        if(roomsUntilBranch <= 0 && isMainRoute && _numOfCurrentBranches < _numOfPossibleBranches)
+        {
+            Debug.Log("generating branch at: x: " + currentRoom.transform.position.x + " | x: " + currentRoom.transform.position.y + " | y: " + currentRoom.transform.position.z + " | z: ");
+            Vector3 generatorSpawnPoint = GetPositionOfNextRoom(ChangeDirection(), currentRoom.transform.position);
+            GameObject generator = Instantiate(GeneratorPrefab, Vector3.zero, Quaternion.identity);
+            MapGenerationScript generationScript = generator.GetComponent<MapGenerationScript>();
+            generationScript.isMainRoute = false;
+            generationScript.firstRoomSpawn = generatorSpawnPoint;
+            generationScript._numOfPossibleBasicRooms = Random.Range((int)numOfBasicRoomsRange.x/4, (int)numOfBasicRoomsRange.y/4);
+
+            roomsUntilBranch = (int)_numOfPossibleBasicRooms / 3;
+            _numOfCurrentBranches++;
+
+        }
 
         if (_numOfCurrentBasicRooms < _numOfPossibleBasicRooms)
         {
