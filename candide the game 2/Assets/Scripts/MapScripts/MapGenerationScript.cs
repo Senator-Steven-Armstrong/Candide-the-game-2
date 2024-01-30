@@ -228,16 +228,7 @@ public class MapGenerationScript : MonoBehaviour
 
         if(roomsUntilBranch <= 0 && isMainRoute && _numOfCurrentBranches < _numOfPossibleBranches)
         {
-            Debug.Log("generating branch at: x: " + currentRoom.transform.position.x + " | x: " + currentRoom.transform.position.y + " | y: " + currentRoom.transform.position.z + " | z: ");
-            Vector3 generatorSpawnPoint = GetPositionOfNextRoom(ChangeDirection(), currentRoom.transform.position);
-            GameObject generator = Instantiate(GeneratorPrefab, Vector3.zero, Quaternion.identity);
-            MapGenerationScript generationScript = generator.GetComponent<MapGenerationScript>();
-            generationScript.isMainRoute = false;
-            generationScript.firstRoomSpawn = generatorSpawnPoint;
-            generationScript._numOfPossibleBasicRooms = Random.Range((int)numOfBasicRoomsRange.x/4, (int)numOfBasicRoomsRange.y/4);
-
-            roomsUntilBranch = (int)_numOfPossibleBasicRooms / 3;
-            _numOfCurrentBranches++;
+            GenerateBranch();
 
         }
 
@@ -247,6 +238,19 @@ public class MapGenerationScript : MonoBehaviour
         }
     }
 
+    private void GenerateBranch()
+    {
+        Debug.Log("generating branch at: x: " + currentRoom.transform.position.x + " | x: " + currentRoom.transform.position.y + " | y: " + currentRoom.transform.position.z + " | z: ");
+        Vector3 generatorSpawnPoint = GetPositionOfNextRoom(ChangeDirection(), currentRoom.transform.position);
+        GameObject generator = Instantiate(GeneratorPrefab, Vector3.zero, Quaternion.identity);
+        MapGenerationScript generationScript = generator.GetComponent<MapGenerationScript>();
+        generationScript.isMainRoute = false;
+        generationScript.firstRoomSpawn = generatorSpawnPoint;
+        generationScript._numOfPossibleBasicRooms = Random.Range((int)numOfBasicRoomsRange.x / 4, (int)numOfBasicRoomsRange.y / 4);
+
+        roomsUntilBranch = (int)_numOfPossibleBasicRooms / 3;
+        _numOfCurrentBranches++;
+    }
     private void SpawnRoom(GameObject prefab, Vector3 pos)
     {
         GameObject room = Instantiate(prefab, pos, Quaternion.identity);
