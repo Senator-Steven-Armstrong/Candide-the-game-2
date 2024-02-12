@@ -609,6 +609,8 @@ MonoBehaviour:
   GeneratorPrefab: {fileID: 646135656176021625, guid: a933e96eff3a85344a1f00e1431c5351, type: 3}
   firstRoomSpawn: {x: 0, y: 0, z: 0}
   waittime: 1
+  manualGeneration: 1
+  savedWattime: 0
   _currentGenerationEvent: 0
 --- !u!4 &7919177675092824637
 Transform:

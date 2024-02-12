@@ -24,7 +24,7 @@ public class MapGenerationScript : MonoBehaviour
     [SerializeField] private int roomsUntilCombat;
     [SerializeField] private int roomsUntilBranch;
 
-    private GameObject currentRoom;
+    public GameObject currentRoom;
     public PartyHandlerScript partyHandler;
 
     [Header("Room Prefabs")]
@@ -37,6 +37,9 @@ public class MapGenerationScript : MonoBehaviour
     public Vector3 firstRoomSpawn = Vector3.zero;
 
     [SerializeField] public float waittime;
+
+    public bool manualGeneration = false;
+    public float savedWattime;
 
     private enum generationEvents
     {
@@ -53,6 +56,8 @@ public class MapGenerationScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        savedWattime = waittime;
+
         if (!isMainRoute)
         {
             SetGenerationValues();
@@ -65,6 +70,7 @@ public class MapGenerationScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            waittime = savedWattime;
             if(gameObject.transform.childCount != 0)
             {
                 int TransformChildCount = gameObject.transform.childCount;
@@ -73,9 +79,32 @@ public class MapGenerationScript : MonoBehaviour
                     Destroy(gameObject.transform.GetChild(TransformChildCount - i - 1).gameObject);
                 }
             }
+            if (!isMainRoute)
+            {
+                Destroy(gameObject);
+            }
 
             SetGenerationValues();
             StartGeneration();
+        }
+
+        if (Input.GetKeyDown(KeyCode.W) && manualGeneration == true)
+        {
+            waittime = 0;
+            StartCoroutine(GenerateNextRoom());
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            manualGeneration = !manualGeneration;
+            if (manualGeneration)
+            {
+                waittime = 0;
+            }
+            else
+            {
+                waittime = savedWattime;
+            }
         }
     }
 
@@ -88,7 +117,7 @@ public class MapGenerationScript : MonoBehaviour
             partyHandler.currentRoom = currentRoom.GetComponent<Room>();
         }
 
-        if (_numOfCurrentBasicRooms < _numOfPossibleBasicRooms)
+        if (_numOfCurrentBasicRooms < _numOfPossibleBasicRooms && !manualGeneration)
         {
             StartCoroutine(GenerateNextRoom());
         }
@@ -234,6 +263,7 @@ public class MapGenerationScript : MonoBehaviour
 
         if (_numOfCurrentBasicRooms < _numOfPossibleBasicRooms)
         {
+            if(!manualGeneration) 
             StartCoroutine(GenerateNextRoom());
         }
     }
@@ -244,9 +274,40 @@ public class MapGenerationScript : MonoBehaviour
         Vector3 generatorSpawnPoint = GetPositionOfNextRoom(ChangeDirection(), currentRoom.transform.position);
         GameObject generator = Instantiate(GeneratorPrefab, Vector3.zero, Quaternion.identity);
         MapGenerationScript generationScript = generator.GetComponent<MapGenerationScript>();
+        generationScript.currentRoom = generator;
         generationScript.isMainRoute = false;
         generationScript.firstRoomSpawn = generatorSpawnPoint;
-        generationScript._numOfPossibleBasicRooms = Random.Range((int)numOfBasicRoomsRange.x / 4, (int)numOfBasicRoomsRange.y / 4);
+        generationScript._numOfPossibleBasicRooms = Random.Range((int)numOfBasicRoomsRange.x / 2, (int)numOfBasicRoomsRange.y / 2);
+        generationScript.roomsUntilTurn = 10;
+        generationScript.manualGeneration = manualGeneration;
+
+        if (currentRoom != null)
+        {
+            Room mainRoomScript = currentRoom.GetComponent<Room>();
+
+            Room branchRooScript = generationScript.currentRoom.GetComponent<Room>();
+            switch (_direction)
+            {
+                case 1:
+                    previousRoomScript.topAdjacentRoom = currentRoomScript;
+                    currentRoomScript.bottomAdjacentRoom = previousRoomScript;
+                    break;
+                case 2:
+                    previousRoomScript.rightAdjacentRoom = currentRoomScript;
+                    currentRoomScript.leftAdjacentRoom = previousRoomScript;
+                    break;
+                case 3:
+                    previousRoomScript.bottomAdjacentRoom = currentRoomScript;
+                    currentRoomScript.topAdjacentRoom = previousRoomScript;
+                    break;
+                case 4:
+                    previousRoomScript.leftAdjacentRoom = currentRoomScript;
+                    currentRoomScript.rightAdjacentRoom = previousRoomScript;
+                    break;
+                default:
+                    break;
+            }
+        }
 
         roomsUntilBranch = (int)_numOfPossibleBasicRooms / 3;
         _numOfCurrentBranches++;
