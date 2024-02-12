@@ -58,11 +58,6 @@ public class MapGenerationScript : MonoBehaviour
     {
         savedWattime = waittime;
 
-        if (!isMainRoute)
-        {
-            SetGenerationValues();
-            StartGeneration();
-        }
     }
 
     // Update is called once per frame
@@ -274,40 +269,42 @@ public class MapGenerationScript : MonoBehaviour
         Vector3 generatorSpawnPoint = GetPositionOfNextRoom(ChangeDirection(), currentRoom.transform.position);
         GameObject generator = Instantiate(GeneratorPrefab, Vector3.zero, Quaternion.identity);
         MapGenerationScript generationScript = generator.GetComponent<MapGenerationScript>();
-        generationScript.currentRoom = generator;
+
         generationScript.isMainRoute = false;
         generationScript.firstRoomSpawn = generatorSpawnPoint;
         generationScript._numOfPossibleBasicRooms = Random.Range((int)numOfBasicRoomsRange.x / 2, (int)numOfBasicRoomsRange.y / 2);
         generationScript.roomsUntilTurn = 10;
         generationScript.manualGeneration = manualGeneration;
 
-        if (currentRoom != null)
-        {
-            Room mainRoomScript = currentRoom.GetComponent<Room>();
+        generationScript.SetGenerationValues();
+        generationScript.StartGeneration();
 
-            Room branchRooScript = generationScript.currentRoom.GetComponent<Room>();
-            switch (_direction)
-            {
-                case 1:
-                    previousRoomScript.topAdjacentRoom = currentRoomScript;
-                    currentRoomScript.bottomAdjacentRoom = previousRoomScript;
-                    break;
-                case 2:
-                    previousRoomScript.rightAdjacentRoom = currentRoomScript;
-                    currentRoomScript.leftAdjacentRoom = previousRoomScript;
-                    break;
-                case 3:
-                    previousRoomScript.bottomAdjacentRoom = currentRoomScript;
-                    currentRoomScript.topAdjacentRoom = previousRoomScript;
-                    break;
-                case 4:
-                    previousRoomScript.leftAdjacentRoom = currentRoomScript;
-                    currentRoomScript.rightAdjacentRoom = previousRoomScript;
-                    break;
-                default:
-                    break;
-            }
+
+        Room previousRoomScript = currentRoom.GetComponent<Room>();
+        Room currentRoomScript = generationScript.currentRoom.GetComponent<Room>();
+
+        switch (_direction)
+        {
+            case 1:
+                previousRoomScript.topAdjacentRoom = currentRoomScript;
+                currentRoomScript.bottomAdjacentRoom = previousRoomScript;
+                break;
+            case 2:
+                previousRoomScript.rightAdjacentRoom = currentRoomScript;
+                currentRoomScript.leftAdjacentRoom = previousRoomScript;
+                break;
+            case 3:
+                previousRoomScript.bottomAdjacentRoom = currentRoomScript;
+                currentRoomScript.topAdjacentRoom = previousRoomScript;
+                break;
+            case 4:
+                previousRoomScript.leftAdjacentRoom = currentRoomScript;
+                currentRoomScript.rightAdjacentRoom = previousRoomScript;
+                break;
+            default:
+                break;
         }
+        
 
         roomsUntilBranch = (int)_numOfPossibleBasicRooms / 3;
         _numOfCurrentBranches++;
@@ -320,27 +317,31 @@ public class MapGenerationScript : MonoBehaviour
             Room previousRoomScript = currentRoom.GetComponent<Room>();
 
             Room currentRoomScript = room.GetComponent<Room>();
-            switch (_direction)
+            if(currentRoomScript != null && previousRoomScript != null)
             {
-                case 1:
-                    previousRoomScript.topAdjacentRoom = currentRoomScript;
-                    currentRoomScript.bottomAdjacentRoom = previousRoomScript;
-                    break;
-                case 2:
-                    previousRoomScript.rightAdjacentRoom = currentRoomScript;
-                    currentRoomScript.leftAdjacentRoom = previousRoomScript;
-                    break;
-                case 3:
-                    previousRoomScript.bottomAdjacentRoom = currentRoomScript;
-                    currentRoomScript.topAdjacentRoom = previousRoomScript;
-                    break;
-                case 4:
-                    previousRoomScript.leftAdjacentRoom = currentRoomScript;
-                    currentRoomScript.rightAdjacentRoom = previousRoomScript;
-                    break;
-                default:
-                    break;
+                switch (_direction)
+                {
+                    case 1:
+                        previousRoomScript.topAdjacentRoom = currentRoomScript;
+                        currentRoomScript.bottomAdjacentRoom = previousRoomScript;
+                        break;
+                    case 2:
+                        previousRoomScript.rightAdjacentRoom = currentRoomScript;
+                        currentRoomScript.leftAdjacentRoom = previousRoomScript;
+                        break;
+                    case 3:
+                        previousRoomScript.bottomAdjacentRoom = currentRoomScript;
+                        currentRoomScript.topAdjacentRoom = previousRoomScript;
+                        break;
+                    case 4:
+                        previousRoomScript.leftAdjacentRoom = currentRoomScript;
+                        currentRoomScript.rightAdjacentRoom = previousRoomScript;
+                        break;
+                    default:
+                        break;
+                }
             }
+            
         }
 
         currentRoom = room;

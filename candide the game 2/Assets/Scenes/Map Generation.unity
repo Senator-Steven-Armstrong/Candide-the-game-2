@@ -603,12 +603,13 @@ MonoBehaviour:
   roomsUntilTurn: 0
   roomsUntilCombat: 0
   roomsUntilBranch: 0
+  currentRoom: {fileID: 0}
   partyHandler: {fileID: 2068760256}
   BasicRoom: {fileID: 8288765729895447579, guid: 2c40fa3ef5c3a4e4aa7a98beb1395ac8, type: 3}
   CombatRoom: {fileID: 0}
   GeneratorPrefab: {fileID: 646135656176021625, guid: a933e96eff3a85344a1f00e1431c5351, type: 3}
   firstRoomSpawn: {x: 0, y: 0, z: 0}
-  waittime: 1
+  waittime: 0.1
   manualGeneration: 1
   savedWattime: 0
   _currentGenerationEvent: 0
