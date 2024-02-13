@@ -144,6 +144,8 @@ public class MapGenerationScript : MonoBehaviour
         roomsUntilTurn = Random.Range(2, 4);
         roomsUntilBranch = (int)_numOfPossibleBasicRooms/3;
 
+        
+
     }
 
     private void SetEventList()
@@ -266,7 +268,8 @@ public class MapGenerationScript : MonoBehaviour
     private void GenerateBranch()
     {
         Debug.Log("generating branch at: x: " + currentRoom.transform.position.x + " | x: " + currentRoom.transform.position.y + " | y: " + currentRoom.transform.position.z + " | z: ");
-        Vector3 generatorSpawnPoint = GetPositionOfNextRoom(ChangeDirection(), currentRoom.transform.position);
+        int branchDirection = ChangeDirection();
+        Vector3 generatorSpawnPoint = GetPositionOfNextRoom(branchDirection, currentRoom.transform.position);
         GameObject generator = Instantiate(GeneratorPrefab, Vector3.zero, Quaternion.identity);
         MapGenerationScript generationScript = generator.GetComponent<MapGenerationScript>();
 
@@ -283,7 +286,11 @@ public class MapGenerationScript : MonoBehaviour
         Room previousRoomScript = currentRoom.GetComponent<Room>();
         Room currentRoomScript = generationScript.currentRoom.GetComponent<Room>();
 
-        switch (_direction)
+        Debug.Log(previousRoomScript.gameObject.transform.position);
+        Debug.Log(currentRoomScript.gameObject.transform.position);
+        
+
+        switch (branchDirection)
         {
             case 1:
                 previousRoomScript.topAdjacentRoom = currentRoomScript;

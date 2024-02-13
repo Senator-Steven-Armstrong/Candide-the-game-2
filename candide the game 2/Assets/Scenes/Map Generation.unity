@@ -564,62 +564,13 @@ MonoBehaviour:
   isMoving: 0
   canMove: 1
   currentState: 0
---- !u!1 &3794698942528834297
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7919177675092824637}
-  - component: {fileID: 7766979085538509957}
-  m_Layer: 0
-  m_Name: MapGenerator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &7766979085538509957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3794698942528834297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49c91802854f5e943bfd8e1707e2b98a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numOfBasicRoomsRange: {x: 22, y: 35}
-  _numOfPossibleBasicRooms: 0
-  numOfCombatRoomsRange: {x: 4, y: 7}
-  _numOfPossibleCombatRooms: 0
-  numOfBranchesRange: {x: 1, y: 2}
-  _numOfPossibleBranches: 0
-  isMainRoute: 1
-  roomsUntilTurn: 0
-  roomsUntilCombat: 0
-  roomsUntilBranch: 0
-  currentRoom: {fileID: 0}
-  partyHandler: {fileID: 2068760256}
-  BasicRoom: {fileID: 8288765729895447579, guid: 2c40fa3ef5c3a4e4aa7a98beb1395ac8, type: 3}
-  CombatRoom: {fileID: 0}
-  GeneratorPrefab: {fileID: 646135656176021625, guid: a933e96eff3a85344a1f00e1431c5351, type: 3}
-  firstRoomSpawn: {x: 0, y: 0, z: 0}
-  waittime: 0.1
-  manualGeneration: 1
-  savedWattime: 0
-  _currentGenerationEvent: 0
---- !u!4 &7919177675092824637
+--- !u!4 &2437386070210915687
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3794698942528834297}
+  m_GameObject: {fileID: 8465036962065744231}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -628,3 +579,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4467093456946832446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465036962065744231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5b1489f2704a444faca3f990fafcdf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numOfBasicRoomsRange: {x: 10, y: 16}
+  _numOfPossibleBasicRooms: 0
+  numOfCombatRoomsRange: {x: 2, y: 3}
+  _numOfPossibleCombatRooms: 0
+  numOfBranchesRange: {x: 0, y: 0}
+  _numOfPossibleBranches: 0
+  isMainRoute: 1
+  roomsUntilCombat: 0
+  roomsUntilBranch: 0
+  currentRoom: {fileID: 0}
+  partyHandler: {fileID: 2068760256}
+  BasicRoom: {fileID: 8288765729895447579, guid: 2c40fa3ef5c3a4e4aa7a98beb1395ac8, type: 3}
+  CombatRoom: {fileID: 8288765729895447579, guid: 946210fc3edc12844a9bc6c638b7feeb, type: 3}
+  GeneratorPrefab: {fileID: 3426390882642901460, guid: fb0e3535eb61645429977b2320fb6abb, type: 3}
+  firstRoomSpawn: {x: 0, y: 0, z: 0}
+  waittime: 0
+  savedWattime: 0
+  manualGeneration: 0
+  _currentGenerationEvent: 0
+--- !u!1 &8465036962065744231
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2437386070210915687}
+  - component: {fileID: 4467093456946832446}
+  m_Layer: 0
+  m_Name: MapGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
